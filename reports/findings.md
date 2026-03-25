@@ -1,15 +1,15 @@
-# LOB Microstructure: Findings (Phase 7 — Walk-Forward)
+# LOB Microstructure: Final Findings (Phase 8)
 
-## Verdict (Updated from Phase 6 after Walk-Forward)
+## Verdict: **BTC CONDITIONAL GO (Paper Trading) / ETH NO GO**
 
-| Symbol | Single-Split OOS (Ph6) | Walk-Forward (Ph7) | Status |
-|--------|----------------------|-------------------|--------|
-| **BTCUSDT** | 30s +0.783 (n=15) | **60s +0.736 (n=50)** | **PASS (revised config)** |
-| **BTCUSDT** | - | **120s +2.598 (n=25)** | **PASS (standard maker!)** |
-| ETHUSDT | -0.266 (n=10) | -0.335 (n=43) | **CONDITIONAL** |
+| Symbol | Config | WF Net (VIP) | Trades | Win | +Windows | Decision |
+|--------|--------|-------------|--------|-----|----------|----------|
+| **BTC** | **10%_120s** | **+1.945** | 29 | 62% | 4/10 | **Paper trade** |
+| **BTC** | **5%_60s** | **+0.763** | 59 | 58% | 5/10 | **Paper trade** |
+| BTC | 10%_120s STD | -0.055 | 29 | 62% | 3/10 | NO GO |
+| ETH | all configs | negative | - | - | - | NO GO |
 
-**Critical correction:** The 30s config that passed Phase 6 (-0.383 in WF) is demoted.
-The 60s and 120s horizons are the actual robust performers.
+**Phase 8 updated the Phase 7 Standard Maker result from +0.598 to -0.055 (more data, more windows).**
 
 ---
 
