@@ -289,3 +289,17 @@
 2026-03-25 20:08:15,251 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 71483.40 (imb=1.0908, rank=1.000, spread=0.10)
 2026-03-25 20:08:38,851 [INFO] src.paper_trader: [A_5pct_60s] Status: 16 trades, net=-36.9bps, win=18.8%, open=0
 2026-03-25 20:08:38,853 [INFO] src.paper_trader: [B_10pct_120s] Status: 7 trades, net=-24.0bps, win=28.6%, open=0
+2026-03-25 20:09:21,012 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 71507.30 (imb=-0.8495, rank=0.021, spread=0.10)
+2026-03-25 20:09:31,508 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 71502.10 (imb=0.9308, rank=0.936, spread=0.10)
+2026-03-25 20:09:38,883 [INFO] src.paper_trader: [A_5pct_60s] Status: 16 trades, net=-36.9bps, win=18.8%, open=0
+2026-03-25 20:09:38,886 [INFO] src.paper_trader: [B_10pct_120s] Status: 7 trades, net=-24.0bps, win=28.6%, open=0
+2026-03-25 20:10:26,117 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 71486.10 (imb=-1.3003, rank=0.000, spread=0.10)
+2026-03-25 20:10:38,946 [INFO] src.paper_trader: [A_5pct_60s] Status: 16 trades, net=-36.9bps, win=18.8%, open=0
+2026-03-25 20:10:38,949 [INFO] src.paper_trader: [B_10pct_120s] Status: 7 trades, net=-24.0bps, win=28.6%, open=0
+2026-03-25 20:11:33,048 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 71524.90 (imb=-0.9563, rank=0.035, spread=0.10)
+2026-03-25 20:11:39,015 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 71517.70 (imb=-0.6182, rank=0.094, spread=0.10)
+2026-03-25 20:11:39,020 [INFO] src.paper_trader: [A_5pct_60s] Status: 16 trades, net=-36.9bps, win=18.8%, open=0
+2026-03-25 20:11:39,027 [INFO] src.paper_trader: [B_10pct_120s] Status: 7 trades, net=-24.0bps, win=28.6%, open=0
+2026-03-25 20:12:38,992 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 71519.90 (imb=1.0222, rank=1.000, spread=0.10)
+2026-03-25 20:12:39,095 [INFO] src.paper_trader: [A_5pct_60s] Status: 16 trades, net=-36.9bps, win=18.8%, open=0
+2026-03-25 20:12:39,101 [INFO] src.paper_trader: [B_10pct_120s] Status: 7 trades, net=-24.0bps, win=28.6%, open=0
