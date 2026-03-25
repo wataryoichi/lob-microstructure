@@ -443,5 +443,115 @@ def show_leaderboard(
     typer.echo(render_leaderboard(entries, sort_by=sort_by, top_n=top_n))
 
 
+@app.command()
+def sweep_imbalance(
+    symbols: str = typer.Option("BTCUSDT,ETHUSDT", "--symbols", "-s"),
+    data_dir: str = typer.Option("data/raw", "--data-dir"),
+    depth: int = typer.Option(5, "--depth", "-d"),
+) -> None:
+    """Full imbalance parameter sweep + regime analysis + leaderboard update."""
+    import glob
+
+    from .data_loader import filter_complete_snapshots
+    from .imbalance_strategy import ImbalanceStrategyConfig, run_imbalance_strategy, sweep_imbalance_params
+    from .leaderboard import add_entry, entry_from_imbalance_result, load_leaderboard, render_leaderboard
+    from .regime import add_regime_labels, generate_regime_report
+
+    import pandas as pd
+
+    symbol_list = [s.strip() for s in symbols.split(",")]
+
+    for sym in symbol_list:
+        # Load all data for this symbol
+        files = sorted(glob.glob(f"{data_dir}/{sym}*.parquet"))
+        files = [f for f in files if "synthetic" not in f]
+        if not files:
+            typer.echo(f"No data for {sym}")
+            continue
+
+        dfs = [pd.read_parquet(f) for f in files]
+        df = pd.concat(dfs, ignore_index=True)
+        if "timestamp" in df.columns:
+            df = df.sort_values("timestamp").reset_index(drop=True)
+        if "symbol" in df.columns:
+            df = df.drop(columns=["symbol"])
+
+        df = filter_complete_snapshots(df, depth=depth)
+        if len(df) < 1000:
+            typer.echo(f"{sym}: only {len(df)} snapshots, skipping")
+            continue
+
+        mid = (df["bid_p1"] + df["ask_p1"]) / 2
+        duration_s = (df["timestamp"].max() - df["timestamp"].min()) / 1000 if "timestamp" in df.columns else 0
+        typer.echo(f"\n{'='*50}")
+        typer.echo(f"{sym}: {len(df)} snaps, {duration_s/60:.1f} min")
+        typer.echo(f"  Price: {mid.min():.2f} - {mid.max():.2f}")
+
+        sweep = sweep_imbalance_params(
+            df,
+            thresholds=[0.05, 0.10, 0.15, 0.20],
+            horizons=[50, 100, 300, 600],
+            vol_percentiles=[0, 50, 70],
+            maker_fees=[1.0, 0.0],
+        )
+
+        if sweep.empty:
+            typer.echo("  No valid configurations")
+            continue
+
+        typer.echo(f"  {len(sweep)} valid configs")
+        typer.echo(f"  Top 5:")
+        for _, row in sweep.head(5).iterrows():
+            typer.echo(f"    t={row['threshold']:.2f} h={row['horizon_s']:.0f}s vol={row['vol_pct']:.0f}% "
+                       f"{row['fee_tier']}: n={row['n_trades']:.0f} "
+                       f"gross={row['avg_gross_bps']:.3f} net={row['avg_net_bps']:.3f} "
+                       f"win={row['win_rate']:.1%}")
+
+        # Add top configs to leaderboard
+        data_label = f"real_ws_{len(df)//1000}k" if duration_s > 0 else f"real_rest_{len(df)//1000}k"
+        for _, row in sweep.head(5).iterrows():
+            cfg = ImbalanceStrategyConfig(
+                long_threshold_pct=1.0 - row["threshold"],
+                short_threshold_pct=row["threshold"],
+                horizon_steps=int(row["horizon_s"] * 10),
+                min_vol_percentile=row["vol_pct"],
+                maker_fee_bps=0.0 if row["fee_tier"] == "VIP" else 1.0,
+            )
+            r = run_imbalance_strategy(df, cfg)
+            e = entry_from_imbalance_result(r, symbol=sym, data_source=data_label)
+            add_entry(e)
+
+        # Regime analysis
+        best = sweep.iloc[0]
+        best_cfg = ImbalanceStrategyConfig(
+            long_threshold_pct=1.0 - best["threshold"],
+            short_threshold_pct=best["threshold"],
+            horizon_steps=int(best["horizon_s"] * 10),
+            min_vol_percentile=best["vol_pct"],
+            maker_fee_bps=0.0 if best["fee_tier"] == "VIP" else 1.0,
+        )
+        result = run_imbalance_strategy(df, best_cfg)
+        if result.trades:
+            df_regime = add_regime_labels(df)
+            for trade in result.trades:
+                idx = trade["index"]
+                if idx < len(df_regime):
+                    for col in ["vol_regime", "spread_regime", "hour_bucket"]:
+                        if col in df_regime.columns:
+                            trade[col] = str(df_regime.iloc[idx][col])
+
+            report = generate_regime_report(result.trades, title=f"{sym} Regime Analysis")
+            report_path = f"reports/{sym.lower()}_regime.md"
+            with open(report_path, "w") as f:
+                f.write(report)
+            typer.echo(f"  Regime report: {report_path}")
+
+        sweep.to_csv(f"results/{sym.lower()}_imbalance_sweep.csv", index=False)
+
+    # Show final leaderboard
+    entries = load_leaderboard()
+    typer.echo(f"\n{render_leaderboard(entries, top_n=15)}")
+
+
 if __name__ == "__main__":
     app()
