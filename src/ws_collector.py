@@ -210,6 +210,8 @@ class WSCollector:
         topic = msg.get("topic", "")
         msg_type = msg.get("type", "")
         data = msg.get("data", {})
+        # Bybit puts timestamp at top level, not inside data
+        msg_ts = int(msg.get("ts", 0))
 
         if not topic.startswith("orderbook."):
             return
@@ -227,10 +229,14 @@ class WSCollector:
 
         if msg_type == "snapshot":
             book.apply_snapshot(data)
+            if msg_ts > 0:
+                book.timestamp = msg_ts
         elif msg_type == "delta":
             if not book.initialized:
                 return
             ok = book.apply_delta(data)
+            if msg_ts > 0:
+                book.timestamp = msg_ts
             if not ok:
                 logger.warning(f"Sequence gap for {symbol}, requesting re-snapshot")
                 self.metadata["gaps_detected"] += 1
