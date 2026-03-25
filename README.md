@@ -1,161 +1,129 @@
 # LOB Microstructure Trading System
 
-**Paper**: Wang (2025) "Exploring Microstructural Dynamics in Cryptocurrency Limit Order Books: Better Inputs Matter More Than Stacking Another Hidden Layer"
+**Paper**: Wang (2025) "Better Inputs Matter More Than Stacking Another Hidden Layer"
 
-**Thesis**: Short-term LOB price prediction gains come primarily from data preprocessing and feature engineering, not from model complexity. We reproduce this claim, then test whether the resulting edge survives transaction costs.
+**Thesis**: The main edge in LOB trading comes from input design (preprocessing, labeling, cost modeling), not model complexity. Our primary strategy is **extreme order imbalance**, with ML as an optional filter.
 
 ## Quick Start
 
 ```bash
 pip install -e ".[dev]"
 
-# 1. Fetch LOB data from Bybit (or generate synthetic)
+# Data collection (24h+ WebSocket)
+python -m src.cli collect-ws --symbols BTCUSDT,ETHUSDT --duration 25
+
+# Or synthetic data for development
 python -m src.cli fetch-data --synthetic -n 100000
 
-# 2. Run focused experiment grid (paper reproduction)
-python -m src.cli run-experiments --config configs/paper_reproduction.yaml
+# Run imbalance strategy sweep
+python -m src.cli run-imbalance --threshold 0.10 --horizon 100
 
-# 3. View results
-cat reports/experiment_report.md
+# View leaderboard (trading-first)
+python -m src.cli show-leaderboard
+
+# Paper reproduction (Layer 1)
+python -m src.cli run-experiments --config configs/paper_reproduction.yaml
 ```
+
+## Primary Strategy: Extreme Order Imbalance
+
+The core trading signal is **not an ML model** -- it is the raw 5-level order imbalance at extreme quantiles (top/bottom 10-20%), with Savitzky-Golay smoothing.
+
+| Metric | Value (5k sample) |
+|--------|-------------------|
+| Best net PnL (VIP maker) | **+0.76 bps/trade** |
+| Win rate | 77.8% |
+| Profit factor | 2.93 |
+| Holding period | 30 seconds |
+| Signal | Imbalance top/bot 20% |
+| Sample size | 9 trades (needs 24h+ validation) |
+
+ML is used as a **filter** (adopt/reject candidate trades), not as the primary signal generator.
 
 ## Project Layers
 
-This project has three distinct layers. Each builds on the previous, and they should not be mixed.
-
-### Layer 1: Paper Reproduction (`configs/paper_reproduction.yaml`)
-
-Reproduce Wang (2025) Table 1-4 as faithfully as possible.
-
-- **Data**: Bybit BTC/USDT LOB, 100ms snapshots
-- **Comparison grid** (fixed):
-  - Preprocessing: raw / Savitzky-Golay / Kalman
-  - LOB depth: 5 / 40 levels
-  - Horizon: 100ms / 500ms / 1000ms
-  - Labels: binary (up/down) / ternary (up/flat/down)
-  - Models: Logistic Regression / XGBoost (paper shows these match or beat deep models)
-- **Metric**: F1 score (macro), per-class F1
-- **Split**: 80/20 temporal (no shuffle), 20% of train as validation
-- **Goal**: Confirm or refute that SG filtering + simple models >= deep models
-
-### Layer 2: Research Extensions (`configs/extended.yaml`)
-
-Extend the paper's findings toward practical trading.
-
-- **Longer horizons**: 5s / 10s / 30s / 60s (where price moves may exceed costs)
-- **Volatility regime filtering**: trade only when rolling vol > threshold
-- **Order imbalance as direct signal**: extreme quantile (top/bottom 10%) trading
-- **Models**: Add CatBoost; DeepLOB only after baselines are solid
-- **Metric**: Gross PnL (bps/trade), accuracy, win rate
-
-### Layer 3: Trading Simulation (`configs/trading.yaml`)
-
-Cost-aware evaluation of strategies from Layer 2.
-
-- **Cost assumptions**:
-  - Standard Maker: 1.0 bps one-way, 3.0 bps round-trip
-  - VIP Maker: 0.0 bps one-way, 1.0 bps round-trip (slippage only)
-  - Taker: 5.5 bps one-way, 13.0 bps round-trip
-- **Execution model**: non-overlapping trades only (no autocorrelation inflation)
-- **Metric**: Net PnL (bps/trade), Sharpe, max drawdown, breakeven analysis
-- **Kill criterion**: If net PnL < 0 at VIP maker on 24h+ data across vol regimes, the approach needs a different pair
+| Layer | Purpose | Primary Metric | Config |
+|-------|---------|----------------|--------|
+| 1. Paper Reproduction | Confirm SG > raw > Kalman | F1 (macro) | `paper_reproduction.yaml` |
+| 2. Research Extensions | Longer horizons, direct signals | Gross bps/trade | `extended.yaml` |
+| 3. Trading Simulation | Cost-aware non-overlapping PnL | **Net bps/trade** | `trading.yaml` |
 
 ## Evaluation Design
+
+### Primary Metrics (Trading-First)
+1. **avg_net_bps** - Net PnL per trade after costs
+2. **avg_gross_bps** - Gross PnL per trade
+3. **breakeven_gap_bps** - Distance to net=0
+4. **win_rate** / **profit_factor**
+5. **n_trades** - Statistical significance
+
+### Secondary Metrics (Classification)
+- F1 (macro), accuracy - for Layer 1 paper reproduction only
+
+### Cost Assumptions
+
+| Tier | Maker | Taker | Round-Trip (Maker) |
+|------|-------|-------|--------------------|
+| Standard | 1.0 bps | 5.5 bps | 3.0 bps |
+| VIP | 0.0 bps | 3.0 bps | 1.0 bps |
 
 ### Data Split
 ```
 |---- Train (64%) ----|-- Val (16%) --|---- Test (20%) ----|
-                                       ^ all metrics here
 ```
-- Temporal split only (no shuffle)
-- All thresholds and parameters chosen on Train+Val
-- Test is touched once per configuration
-
-### Label Definitions
-- **Binary**: Up (1) if mid-price increases over horizon, Down (0) otherwise
-- **Ternary**: Up (2) / Flat (1) / Down (0), with epsilon auto-tuned for ~33% per class
-- **Horizon**: Number of 100ms steps ahead (e.g., horizon=50 means 5 seconds)
-
-### Signal-to-Position Conversion
-- **Classification output**: predicted class (0/1 or 0/1/2)
-- **Position**: Long (+1) if predicted Up, Short (-1) if predicted Down, Flat (0) if predicted Flat
-- **Size**: Fixed 1 unit per trade (no confidence-based sizing in Layer 1-2)
-- **Duration**: Hold for exactly `horizon` steps, then close
-
-### Cost Model
-```
-round_trip_cost = 2 * (exchange_fee + slippage)
-net_return = gross_return - round_trip_cost
-breakeven_accuracy = 0.5 + cost / (2 * avg_move)
-```
+Temporal only. No shuffle. Percentile thresholds computed on rolling trailing window.
 
 ## Project Structure
 
 ```
-configs/
-  base.yaml                 # Shared defaults
-  paper_reproduction.yaml   # Layer 1: paper grid
-  extended.yaml             # Layer 2: longer horizons, imbalance
-  trading.yaml              # Layer 3: cost-aware backtest
-
 src/
-  cli.py              # CLI: fetch-data, build-features, train, evaluate, run-experiments
-  config.py            # YAML config loader with inheritance
-  constants.py         # Symbols, depths, horizons, fee schedules
-  data_collector.py    # Bybit REST API + synthetic data generator
-  data_loader.py       # Parquet I/O, temporal split, depth filtering
-  features.py          # LOB features: mid-price, imbalance, spread, weighted mid (Eq. 1-4)
-  filters.py           # Savitzky-Golay (Eq. 5-7), Kalman (Eq. 8-10)
-  labeling.py          # Binary/ternary labels, auto-epsilon, class weights
-  models.py            # LR, XGBoost, CatBoost, DeepLOB, CNN+LSTM (ABC base)
-  metrics.py           # Classification metrics + trading PnL metrics
-  experiments.py       # Full experiment grid runner
-  strategy.py          # Adaptive strategy: vol filter, confidence, non-overlapping
-  backtest.py          # Single/multi model evaluation
-  cost_model.py        # Round-trip cost, breakeven, slippage estimation
-  report.py            # Markdown report generator
+  cli.py                # CLI entry points
+  ws_collector.py       # 24h+ WebSocket LOB collector (BTC + ETH)
+  imbalance_strategy.py # PRIMARY: model-free extreme imbalance strategy
+  regime.py             # Regime analysis (vol/spread/time slicing)
+  leaderboard.py        # Auto-generated trading-first leaderboard
+  strategy.py           # Adaptive strategy (ML-based, secondary)
+  features.py           # LOB features (Eq. 1-4)
+  filters.py            # Savitzky-Golay, Kalman (Eq. 5-10)
+  labeling.py           # Binary/ternary labels
+  models.py             # LR, XGBoost (primary); DeepLOB (research only)
+  metrics.py            # Trading + classification metrics
+  experiments.py        # Experiment grid runner
+  backtest.py           # Model evaluation
+  cost_model.py         # Exchange cost model
+  data_collector.py     # REST API + synthetic data
+  data_loader.py        # Parquet I/O
+  config.py             # YAML config
+  report.py             # Report generation
 
-tests/
-  test_basics.py       # 16 tests: features, filters, labels, config, cost model
+configs/
+  paper_reproduction.yaml  # Layer 1
+  extended.yaml            # Layer 2
+  trading.yaml             # Layer 3
 
 reports/
-  experiment_report.md     # Auto-generated from run-experiments
-  phase2_cost_analysis.md  # Cost analysis findings
-  findings.md              # Comprehensive findings (Phases 1-3)
+  findings.md              # Main findings (trading-first)
+  experiment_report.md     # Layer 1 results
+  regime_analysis.md       # Regime breakdown
+  leaderboard.md           # Auto-generated ranking
 ```
 
-## Key Design Decisions
+## Current Status
 
-1. **Filtering first**: Savitzky-Golay / Kalman applied before feature extraction
-2. **Label design matters**: Binary vs ternary, epsilon sensitivity, class balance
-3. **Simple models first**: LR and XGBoost only; add deep models after baselines are solid
-4. **Cost-aware from day one**: Every strategy evaluated gross AND net
-5. **Non-overlapping trades**: Avoid autocorrelation in PnL estimation
-6. **Temporal split only**: No shuffle, no future information leakage
+- 25 passing tests
+- WS collection running (BTC + ETH, 24h+)
+- 64 imbalance strategy configurations swept
+- 3 configurations showing positive net PnL at VIP rates
+- Awaiting 24h data for statistical validation
 
-## Current Results (Real Bybit Data)
+## Key Findings So Far
 
-### Layer 1: Paper Reproduction (5,000 snapshots, ~26 min)
-
-| Config (binary) | Raw | Kalman | **Savitzky-Golay** |
-|------------------|------|--------|---------------------|
-| 100ms, 5-level  | 0.507 | 0.489 | 0.523 |
-| 500ms, 40-level | 0.501 | 0.474 | **0.774** |
-| 1000ms, 40-level | 0.515 | 0.434 | **0.709** |
-
-**SG filtering is the dominant factor** (+0.146 F1 vs raw on average).
-
-### Layer 3: Cost Reality
-
-| Metric | Value |
-|--------|-------|
-| Avg 500ms price move | 0.21 bps |
-| Standard maker RT cost | 3.0 bps |
-| Best gross edge (classification) | +0.18 bps/trade |
-| Best gross edge (imbalance signal) | **+0.82 bps/trade** |
-| Gap to VIP breakeven | **0.18 bps** |
+1. **SG preprocessing is #1 factor** (+0.139 F1, 3-4x impact of model choice)
+2. **500ms moves (0.21 bps) are too small** for standard fees (3 bps RT)
+3. **30s imbalance signal at VIP rates** shows **+0.76 bps/trade** net
+4. **Simple models (LR) beat XGBoost** at 30s+ horizons
+5. **Deep models are not needed** -- the edge is in the signal, not the model
 
 ## References
 
-- [SSRN Paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5331939)
-- [arXiv](https://arxiv.org/abs/2506.05764)
+- [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5331939) / [arXiv](https://arxiv.org/abs/2506.05764)

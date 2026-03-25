@@ -364,5 +364,84 @@ def run_experiments(
     typer.echo(f"\nBest: {best['experiment']} -> F1={best['f1_macro']:.4f}, Acc={best['accuracy']:.4f}")
 
 
+@app.command()
+def collect_ws(
+    symbols: str = typer.Option("BTCUSDT,ETHUSDT", "--symbols", "-s"),
+    duration_hours: float = typer.Option(25.0, "--duration", "-d"),
+    interval_ms: int = typer.Option(100, "--interval"),
+    depth: int = typer.Option(200, "--depth"),
+    output_dir: str = typer.Option("data/raw", "--output-dir"),
+) -> None:
+    """Collect LOB data via WebSocket (24h+ continuous)."""
+    from .ws_collector import collect_ws_sync
+
+    symbol_list = [s.strip() for s in symbols.split(",")]
+    typer.echo(f"Starting WS collection: {symbol_list}, {duration_hours}h, {interval_ms}ms")
+    typer.echo(f"Output: {output_dir}/")
+    typer.echo("Press Ctrl+C to stop early.")
+
+    collect_ws_sync(
+        symbols=symbol_list,
+        duration_hours=duration_hours,
+        interval_ms=interval_ms,
+        depth=depth,
+        output_dir=output_dir,
+    )
+
+
+@app.command()
+def run_imbalance(
+    config: str = typer.Option("configs/trading.yaml", "--config", "-c"),
+    threshold: float = typer.Option(0.10, "--threshold", "-t", help="Quantile threshold (e.g. 0.10 = top/bot 10%)"),
+    horizon: int = typer.Option(100, "--horizon", "-h", help="Holding period in timesteps"),
+) -> None:
+    """Run imbalance direct strategy."""
+    from .config import load_config
+    from .data_loader import load_lob_data, filter_complete_snapshots
+    from .imbalance_strategy import ImbalanceStrategyConfig, run_imbalance_strategy
+
+    cfg = load_config(config)
+    raw_df = load_lob_data(cfg.data.raw_dir, cfg.data.symbol)
+    if raw_df.empty:
+        typer.echo("No data found.")
+        raise typer.Exit(1)
+
+    df = filter_complete_snapshots(raw_df, depth=cfg.data.lob_depth)
+    strat_cfg = ImbalanceStrategyConfig(
+        long_threshold_pct=1.0 - threshold,
+        short_threshold_pct=threshold,
+        horizon_steps=horizon,
+        maker_fee_bps=cfg.cost.maker_fee_bps,
+        slippage_bps=cfg.cost.slippage_bps,
+    )
+    result = run_imbalance_strategy(df, strat_cfg)
+
+    typer.echo(f"\n{'='*50}")
+    typer.echo(f"Imbalance Strategy: thresh={threshold}, horizon={horizon}")
+    typer.echo(f"Trades: {result.n_trades}")
+    typer.echo(f"Avg gross: {result.avg_gross_bps:.3f} bps/trade")
+    typer.echo(f"Avg net: {result.avg_net_bps:.3f} bps/trade")
+    typer.echo(f"Total net: {result.net_pnl_bps:.1f} bps")
+    typer.echo(f"Win rate: {result.win_rate:.1%}")
+    typer.echo(f"Sharpe: {result.sharpe:.2f}")
+    typer.echo(f"Max DD: {result.max_drawdown_bps:.1f} bps")
+
+
+@app.command()
+def show_leaderboard(
+    sort_by: str = typer.Option("avg_net_bps", "--sort", "-s"),
+    top_n: int = typer.Option(20, "--top", "-n"),
+) -> None:
+    """Show strategy leaderboard (trading-first)."""
+    from .leaderboard import load_leaderboard, render_leaderboard
+
+    entries = load_leaderboard()
+    if not entries:
+        typer.echo("No entries. Run experiments or strategies first.")
+        return
+
+    typer.echo(render_leaderboard(entries, sort_by=sort_by, top_n=top_n))
+
+
 if __name__ == "__main__":
     app()
