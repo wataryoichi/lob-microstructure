@@ -9,21 +9,46 @@
 ```bash
 pip install -e ".[dev]"
 
-# Data collection (24h+ WebSocket)
+# === Paper Trading (Phase 9 — current focus) ===
+python -m src.cli run-paper-trading --symbol BTCUSDT --duration 168
+
+# Check status while running
+python -m src.cli paper-status
+
+# === Backtesting ===
 python -m src.cli collect-ws --symbols BTCUSDT,ETHUSDT --duration 25
-
-# Or synthetic data for development
-python -m src.cli fetch-data --synthetic -n 100000
-
-# Run imbalance strategy sweep
-python -m src.cli run-imbalance --threshold 0.10 --horizon 100
-
-# View leaderboard (trading-first)
+python -m src.cli sweep-imbalance --symbols BTCUSDT,ETHUSDT
 python -m src.cli show-leaderboard
-
-# Paper reproduction (Layer 1)
-python -m src.cli run-experiments --config configs/paper_reproduction.yaml
 ```
+
+## Paper Trading (7-day Forward Test)
+
+```bash
+# Start paper trader (runs Config A + Config B in parallel)
+python -m src.cli run-paper-trading --symbol BTCUSDT --duration 168
+
+# Check real-time status
+python -m src.cli paper-status
+```
+
+### GO / NO GO Criteria (after 7 days)
+
+| Criterion | GO | KILL |
+|-----------|-----|------|
+| Total net PnL | > 0 bps | < 0 bps |
+| Positive-day rate | > 50% | < 40% |
+| Max single-day drawdown | < 100 bps | > 100 bps |
+| Trade count | > 50 per config | < 20 |
+
+### What the Paper Trader Does
+1. Connects to Bybit WebSocket (real-time LOB)
+2. Maintains local orderbook from delta stream
+3. Computes 5-level imbalance (SG-filtered) every 100ms
+4. Generates entry signals at extreme percentiles
+5. **Spread filter**: skips entry if spread > 1.5 ticks
+6. **Maker fill simulation**: order fills only when price crosses our level
+7. **Horizon exit**: Maker exit at best price, Taker fallback on timeout
+8. Logs everything to SQLite (`results/paper_trades.db`)
 
 ## Primary Strategy: Extreme Order Imbalance
 

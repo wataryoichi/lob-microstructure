@@ -553,5 +553,112 @@ def sweep_imbalance(
     typer.echo(f"\n{render_leaderboard(entries, top_n=15)}")
 
 
+@app.command()
+def run_paper_trading(
+    symbol: str = typer.Option("BTCUSDT", "--symbol", "-s"),
+    duration_hours: float = typer.Option(168.0, "--duration", "-d", help="Duration in hours (default 7 days)"),
+    max_spread_ticks: float = typer.Option(1.5, "--max-spread", help="Max spread in ticks for entry"),
+    db_path: str = typer.Option("results/paper_trades.db", "--db"),
+) -> None:
+    """Run Paper Trading (forward test). No real orders placed.
+
+    Monitors LOB via WebSocket, generates imbalance signals, simulates
+    Maker fills, logs to SQLite. Run for 7+ days for GO/NO GO validation.
+
+    GO criteria (7 days):
+      - Total net PnL > 0
+      - Positive-day rate > 50%
+      - Max drawdown < 100 bps
+
+    KILL criteria:
+      - Total net PnL < 0 after 7 days
+      - Any single-day drawdown > 100 bps
+    """
+    from .paper_trader import run_paper_trader
+
+    typer.echo(f"Paper Trading: {symbol}")
+    typer.echo(f"Duration: {duration_hours}h ({duration_hours/24:.1f} days)")
+    typer.echo(f"Max spread: {max_spread_ticks} ticks")
+    typer.echo(f"DB: {db_path}")
+    typer.echo(f"Configs: A(5%_60s), B(10%_120s)")
+    typer.echo(f"")
+    typer.echo(f"GO criteria (after 7 days):")
+    typer.echo(f"  - Net PnL > 0")
+    typer.echo(f"  - Positive-day rate > 50%")
+    typer.echo(f"  - Max drawdown < 100 bps")
+    typer.echo(f"")
+    typer.echo(f"Starting... (Ctrl+C to stop)")
+
+    run_paper_trader(
+        symbol=symbol,
+        duration_hours=duration_hours,
+        db_path=db_path,
+        max_spread_ticks=max_spread_ticks,
+    )
+
+
+@app.command()
+def paper_status(
+    db_path: str = typer.Option("results/paper_trades.db", "--db"),
+) -> None:
+    """Show Paper Trading status and summary."""
+    import sqlite3
+    from pathlib import Path
+
+    if not Path(db_path).exists():
+        typer.echo("No paper trading database found. Run paper-trading first.")
+        raise typer.Exit(1)
+
+    conn = sqlite3.connect(db_path)
+
+    # Trades summary per config
+    rows = conn.execute("""
+        SELECT config_name,
+               COUNT(*) as n,
+               AVG(net_bps) as avg_net,
+               SUM(net_bps) as total_net,
+               AVG(CASE WHEN net_bps > 0 THEN 1.0 ELSE 0.0 END) as win_rate,
+               MIN(net_bps) as worst,
+               MAX(net_bps) as best,
+               AVG(gross_bps) as avg_gross
+        FROM trades GROUP BY config_name
+    """).fetchall()
+
+    if not rows:
+        typer.echo("No trades recorded yet.")
+        conn.close()
+        return
+
+    typer.echo(f"\n{'='*60}")
+    typer.echo("Paper Trading Summary")
+    typer.echo(f"{'='*60}")
+
+    for r in rows:
+        name, n, avg_net, total_net, wr, worst, best, avg_gross = r
+        typer.echo(f"\n  {name}:")
+        typer.echo(f"    Trades: {n}")
+        typer.echo(f"    Avg gross: {avg_gross:+.3f} bps")
+        typer.echo(f"    Avg net:   {avg_net:+.3f} bps")
+        typer.echo(f"    Total net: {total_net:+.1f} bps")
+        typer.echo(f"    Win rate:  {wr:.1%}")
+        typer.echo(f"    Best/Worst: {best:+.2f} / {worst:+.2f} bps")
+
+    # Signals summary
+    sig_rows = conn.execute("""
+        SELECT config_name,
+               COUNT(*) as total,
+               SUM(accepted) as accepted,
+               COUNT(*) - SUM(accepted) as rejected
+        FROM signals GROUP BY config_name
+    """).fetchall()
+
+    if sig_rows:
+        typer.echo(f"\n  Signals:")
+        for name, total, accepted, rejected in sig_rows:
+            typer.echo(f"    {name}: {total} signals, {accepted} accepted, {rejected} rejected")
+
+    conn.close()
+
+
 if __name__ == "__main__":
     app()
