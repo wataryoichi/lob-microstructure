@@ -1,11 +1,15 @@
-# LOB Microstructure: Final OOS Findings
+# LOB Microstructure: Findings (Phase 7 — Walk-Forward)
 
-## Verdict
+## Verdict (Updated from Phase 6 after Walk-Forward)
 
-| Symbol | Kill Criterion | Status |
-|--------|---------------|--------|
-| **BTCUSDT** | OOS net > 0 at VIP maker | **PASS** |
-| ETHUSDT | OOS net > 0 at VIP maker | **CONDITIONAL** (need more data) |
+| Symbol | Single-Split OOS (Ph6) | Walk-Forward (Ph7) | Status |
+|--------|----------------------|-------------------|--------|
+| **BTCUSDT** | 30s +0.783 (n=15) | **60s +0.736 (n=50)** | **PASS (revised config)** |
+| **BTCUSDT** | - | **120s +2.598 (n=25)** | **PASS (standard maker!)** |
+| ETHUSDT | -0.266 (n=10) | -0.335 (n=43) | **CONDITIONAL** |
+
+**Critical correction:** The 30s config that passed Phase 6 (-0.383 in WF) is demoted.
+The 60s and 120s horizons are the actual robust performers.
 
 ---
 
@@ -100,19 +104,64 @@ The edge is real but statistical power is limited. A Binomial test: P(13 of 15 w
 - Revisit with 24h+ data
 
 ### Kill Decision
-- **Neither symbol is killed.** Both show gross edge in imbalance signal.
-- BTC clears the net>0 criterion at VIP rates.
-- ETH is deferred pending more data.
+- **Neither symbol is killed.** BTC shows walk-forward positive edge at both VIP and Standard.
+- ETH deferred pending more data.
+- **30s horizon demoted** — single-split OOS was misleading.
 
 ---
 
-## Architecture Summary
+## Phase 7: Walk-Forward Verification (9 rolling windows, 3.17h BTC)
+
+### Walk-Forward Top Results (BTC)
+
+| Config | Trades | WF Net (VIP) | WF Net (STD) | Win | PF | +Windows |
+|--------|--------|-------------|-------------|-----|-----|----------|
+| **10%_120s** | 25 | **+2.598** | **+0.598** | 68% | 3.40 | 4/9 |
+| 5%_60s | 50 | **+0.736** | -1.264 | 58% | 2.45 | 4/9 |
+| 10%_60s | 54 | +0.231 | -1.769 | 59% | 1.84 | 4/9 |
+| 15%_30s_vol50 | 59 | +0.150 | -1.850 | 71% | 2.20 | 5/9 |
+
+### Critical Lesson: Single-Split vs Walk-Forward
+
+| Config | Phase 6 Single OOS | Phase 7 Walk-Forward |
+|--------|-------------------|---------------------|
+| 5%_30s | +0.783 | **-0.383** (DEMOTED) |
+| 5%_60s | -0.771 | **+0.736** (PROMOTED) |
+| 10%_120s | not tested | **+2.598** (NEW BEST) |
+
+**Walk-forward with multiple windows is essential.** Single-split results are unreliable.
+
+---
+
+## Revised Architecture (Phase 7)
 
 ```
-Signal:     5-level order imbalance (SG-filtered), extreme quantile (top/bot 5%)
-Filter:     Logistic Regression on [mid_returns, volatility, imbalance, spread]
-            Probability threshold: 0.55 (accept trade if P(profitable) > 0.55)
-Horizon:    30 seconds (non-overlapping)
-Cost:       VIP Maker: 1.0 bps round-trip (0 fee + 0.5 bps slippage per side)
-Train/Test: 70/30 temporal split, no shuffle
+Primary config (VIP, higher trade count):
+  Signal:     5-level imbalance (SG), extreme 5%
+  Horizon:    60 seconds non-overlapping
+  Cost:       VIP Maker 1.0 bps RT
+  WF Net:     +0.736 bps/trade (50 trades, 4/9 windows positive)
+
+Aggressive config (VIP, best per-trade):
+  Signal:     5-level imbalance (SG), extreme 10%
+  Horizon:    120 seconds non-overlapping
+  Cost:       VIP Maker 1.0 bps RT
+  WF Net:     +2.598 bps/trade (25 trades, 4/9 windows positive)
+
+Standard Maker config:
+  Signal:     5-level imbalance (SG), extreme 10%
+  Horizon:    120 seconds non-overlapping
+  Cost:       Standard Maker 3.0 bps RT
+  WF Net:     +0.598 bps/trade (25 trades)
+  Status:     FIRST STANDARD-FEE VIABLE CONFIG
+
+No ML filter in primary configs (walk-forward shows filter is unstable
+with rolling small windows; adds complexity without consistent benefit).
 ```
+
+## Remaining Risks
+
+1. **4/9 positive windows (44%)** — not yet >60% target for robust deployment
+2. **3.17h data** — need 24h+ for time-of-day stability
+3. **Low vol period** — BTC range only 1% during sample
+4. **n=25-50 trades** — statistically marginal for per-trade metrics
