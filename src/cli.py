@@ -342,6 +342,9 @@ def run_experiments(
 
     if mode == "depth":
         df = run_depth_comparison(raw_df, output_dir=cfg.output.results_dir, seed=cfg.model.seed)
+    elif mode == "extended":
+        from .experiments import run_extended_horizons
+        df = run_extended_horizons(raw_df, output_dir=cfg.output.results_dir, seed=cfg.model.seed)
     else:
         df = run_paper_reproduction(raw_df, output_dir=cfg.output.results_dir, seed=cfg.model.seed)
 

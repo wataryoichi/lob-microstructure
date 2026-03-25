@@ -175,17 +175,18 @@ def run_paper_reproduction(
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Paper experiment grid
+    # Focused experiment grid: preprocessing x horizon x labels x models
+    # Models: LR + XGBoost only (paper shows these match or beat deep models)
     filters = ["raw", "savitzky_golay", "kalman"]
     depths = [5, 40]
     horizons = [1, 5, 10]
     labels = ["binary", "ternary"]
-    models = ["logistic_regression", "xgboost", "catboost"]
+    models = ["logistic_regression", "xgboost"]
 
     experiments = []
     for filt, depth, horizon, label, model in product(filters, depths, horizons, labels, models):
-        # Focus on key combos from paper tables
-        # Table 1&2: 100ms+5level, 500ms+40level, 1000ms+40level
+        # Key combos from paper tables:
+        # 100ms+5level, 500ms+40level, 1000ms+40level
         if depth == 5 and horizon != 1:
             continue
         if depth == 40 and horizon == 1:
@@ -246,6 +247,55 @@ def run_depth_comparison(
         results.append(result)
 
     _save_results(results, output_dir, filename="depth_comparison.json")
+    return pd.DataFrame(results)
+
+
+def run_extended_horizons(
+    raw_df: pd.DataFrame,
+    output_dir: str | Path = "results",
+    seed: int = 42,
+) -> pd.DataFrame:
+    """Layer 2: Longer horizons where price moves may exceed costs.
+
+    Grid:
+    - Horizons: 50 (5s), 100 (10s), 300 (30s), 600 (60s)
+    - Filters: raw, savitzky_golay
+    - Labels: binary only
+    - Models: logistic_regression, xgboost
+    - Depth: 40 only
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    experiments = []
+    for filt in ["raw", "savitzky_golay"]:
+        for horizon in [50, 100, 300, 600]:
+            for model in ["logistic_regression", "xgboost"]:
+                experiments.append(ExperimentConfig(
+                    filter_type=filt,
+                    depth=40,
+                    horizon_steps=horizon,
+                    label_scheme="binary",
+                    model_type=model,
+                ))
+
+    logger.info(f"Running {len(experiments)} extended horizon experiments...")
+
+    results = []
+    for i, exp in enumerate(experiments):
+        logger.info(f"[{i+1}/{len(experiments)}] {exp}")
+        try:
+            result = run_single_experiment(raw_df, exp, seed=seed)
+            results.append(result)
+        except Exception as e:
+            logger.error(f"Failed: {exp} -> {e}")
+            results.append({
+                "experiment": f"{exp.model_type}_{exp.filter_type}_d{exp.depth}_h{exp.horizon_steps}",
+                "status": "error",
+                "error": str(e),
+            })
+
+    _save_results(results, output_dir, filename="extended_results.json")
     return pd.DataFrame(results)
 
 

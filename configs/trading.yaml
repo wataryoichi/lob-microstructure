@@ -1,0 +1,31 @@
+# Layer 3: Trading simulation
+# Cost-aware evaluation with realistic assumptions
+inherit: base.yaml
+
+data:
+  lob_depth: 40
+
+preprocessing:
+  filter_type: savitzky_golay
+
+labeling:
+  scheme: binary
+  horizon_ms: 10000
+  horizon_steps: 100
+
+features:
+  depth_levels: [40]
+  sequence_length: 1
+
+model:
+  type: xgboost
+  seed: 42
+
+training:
+  train_ratio: 0.8
+
+cost:
+  enabled: true
+  maker_fee_bps: 1.0     # Standard Bybit maker
+  taker_fee_bps: 5.5     # Standard Bybit taker
+  slippage_bps: 0.5      # Conservative estimate

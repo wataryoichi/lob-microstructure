@@ -1,0 +1,29 @@
+# Layer 2: Research extensions
+# Longer horizons where price moves may exceed transaction costs
+inherit: base.yaml
+
+data:
+  lob_depth: 40
+
+preprocessing:
+  filter_type: savitzky_golay
+
+labeling:
+  scheme: binary
+  horizon_ms: 10000       # 10 seconds
+  horizon_steps: 100
+
+features:
+  depth_levels: [5, 40]
+  sequence_length: 1
+
+model:
+  type: xgboost
+  seed: 42
+
+training:
+  train_ratio: 0.8
+  n_snapshots: 100000
+
+cost:
+  enabled: false    # Layer 2 reports gross only

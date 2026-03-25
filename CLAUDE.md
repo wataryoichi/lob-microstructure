@@ -1,70 +1,82 @@
 # LOB Microstructure Trading System
 
 ## Overview
-Wang (2025) "Exploring Microstructural Dynamics in Cryptocurrency Limit Order Books:
-Better Inputs Matter More Than Stacking Another Hidden Layer" の再現・実務検証プロジェクト。
-
-BTC/USDT LOBデータ（Bybit）を用い、前処理・特徴量設計・ラベリングの違いが
-短期価格方向予測にどう影響するかを検証し、実戦可能なトレードシステムを構築する。
+Wang (2025) "Better Inputs Matter More Than Stacking Another Hidden Layer" の再現・実務検証。
+BTC/USDT LOBデータ（Bybit）で、前処理・ラベリングの効果をモデル複雑性と比較し、
+コスト込みで実戦可能かを判定する。
 
 ## Key Commands
 ```bash
 pip install -e ".[dev]"
 pytest tests/
-python -m src.cli fetch-data --config configs/base.yaml
-python -m src.cli build-features --config configs/base.yaml
-python -m src.cli train --config configs/paper_reproduction.yaml
-python -m src.cli backtest --config configs/paper_reproduction.yaml
+python -m src.cli fetch-data --synthetic -n 100000
+python -m src.cli run-experiments --config configs/paper_reproduction.yaml
 ```
 
-## 開発原則
+## 3レイヤー構造（厳守）
 
-### 検証の順序（厳守）
-1. **論文を素直に再現する**（独自改造しない）
-2. **コスト分析を直後にやる**（Gross成績だけで深掘りに進まない）
-3. 感度分析（何がロバストで何が脆いかを把握）
-4. ファクター分解（αの源泉を特定）
-5. 実務化設計（執行改善・取引タイミング選別）
-6. 最終判断（数値基準で明確に判定）
+### Layer 1: 論文再現 (`configs/paper_reproduction.yaml`)
+- 論文の主張を忠実に再現する。独自改造しない
+- 比較軸: preprocessing(3) x depth(2) x horizon(3) x labels(2) x models(2) = 72通り
+- モデルは **Logistic Regression と XGBoost のみ**
+- 評価: F1 (macro), per-class F1
 
-### 禁止事項
-- 論文再現前に独自改造を大量に入れない
-- 未来情報を混ぜない（ローリングウィンドウは過去のみ使用）
-- Grossの見た目だけで判断しない（必ずコスト込みで評価）
+### Layer 2: 研究拡張 (`configs/extended.yaml`)
+- Layer 1の知見をもとに、実戦向きの設定を探索
+- 長いホライズン (5s, 10s, 30s, 60s)
+- Order imbalance直接シグナル
+- ボラティリティレジーム別分析
+- 評価: Gross PnL (bps/trade), win rate
+
+### Layer 3: 実戦シミュレーション (`configs/trading.yaml`)
+- Layer 2の有望な設定をコスト込みで評価
+- 非重複トレードのみ（自己相関排除）
+- コスト: Standard Maker 3.0bps RT, VIP Maker 1.0bps RT
+- 評価: Net PnL (bps/trade), Sharpe, max drawdown
+- Kill criterion: VIP maker で Net < 0 on 24h+ data → 不採用
+
+## 評価設計
+
+### データ分割
+```
+|---- Train (64%) ----|-- Val (16%) --|---- Test (20%) ----|
+```
+- 時系列順のみ。シャッフルしない
+- 閾値・パラメータはTrain+Valで決定
+- Testは各設定で1回だけ触る
+
+### ラベル定義
+- Binary: mid_price(t+h) > mid_price(t) → Up(1), else Down(0)
+- Ternary: |change| > epsilon → Up(2)/Down(0), else Flat(1)
+  - epsilon: auto-tune for ~33% per class
+
+### コスト仮定 (Bybit BTC/USDT)
+| Tier | Maker | Taker | RT (Maker) | RT (Taker) |
+|------|-------|-------|-----------|-----------|
+| Standard | 1.0 bps | 5.5 bps | 3.0 bps | 13.0 bps |
+| VIP | 0.0 bps | 3.0 bps | 1.0 bps | 7.0 bps |
+
+### Signal → Position 変換
+- Up予測 → Long(+1), Down予測 → Short(-1), Flat予測 → Flat(0)
+- サイズ: 固定1単位（Layer 1-2）
+- 保持: horizonステップ後にクローズ
+- 非重複: 次のトレードはhorizon経過後
+
+## 禁止事項
+- Layer 1が完了する前にLayer 2-3に進まない
+- モデルを3つ以上同時に比較しない（LR + XGBoost + 1つだけ）
+- Gross成績だけで判断しない
 - パラメータ最適化と最終評価を同じ期間でやらない
+- 未来情報を混ぜない
 
-### 技術要件
+## 技術要件
 - Python, 型ヒント, 関数分割
-- ロジックと設定（YAML）を分離
-- 乱数はseed固定
-- 出力はCSV/JSON/Markdown/PNG
+- ロジック/設定(YAML)分離, seed固定
+- 出力: CSV/JSON/Markdown
+- LOBデータはParquet推奨
 
-### 期間分割（厳守）
-- Train: 80% of LOB snapshots (first ~80,000 snapshots)
-- Test: 20% of LOB snapshots (last ~20,000 snapshots)
-- すべての閾値・パラメータ選択はTrain内のデータのみで決定
-
-## 対象データ
-- Exchange: Bybit
-- Pair: BTC/USDT (primary), ETH/USDT (extension)
-- LOB snapshots: 100ms intervals
-- Depth: 5, 10, 20, 40 levels
-
-## 論文デフォルトパラメータ
-- Savitzky-Golay: cubic polynomial, window_size=21
-- Kalman: random walk model
-- Classification: binary (up/down) and ternary (up/flat/down)
-- LOB depth: 5-level (baseline), 40-level (extended)
-- Sequence length: T=1 (baseline), T=10 (extended)
-- Models: Logistic Regression, XGBoost, CatBoost, DeepLOB, Conv1D+LSTM
-
-## 判断基準
-- メイン戦略候補: Test Accuracy > 55%, Net Sharpe > 1.0
-- サブ戦略候補: Test Accuracy > 52%, Net Sharpe > 0.5
-- 不採用: 上記未達
-
-## 過去PJの教訓
-- コスト分析はPhase2でやる。後回しにしない
-- 入力設計（前処理・特徴量）がモデル選択より重要
-- Maker寄り・低コスト前提で設計する
-- LOBデータは巨大なので効率的なI/Oが重要（Parquet推奨）
+## 過去の知見
+- SG前処理が最も効く（+0.146 F1 vs raw, Kalmanは効かない）
+- 500ms BTC/USDT変動 = 0.21 bps（手数料の1/14）
+- Order imbalance極端値 (top/bot 10%) のgross edge = 0.82 bps (10s)
+- VIP maker breakeven まであと 0.18 bps
