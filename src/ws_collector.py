@@ -123,7 +123,7 @@ class WSCollector:
         chunk_size: int = CHUNK_SIZE,
     ):
         self.symbols = symbols
-        self.depth = depth
+        self.depth = min(depth, 50)  # Bybit WS: 1, 50, 200, 500; 50 is efficient for our needs
         self.interval_ms = interval_ms
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -189,11 +189,8 @@ class WSCollector:
                 await ws.send(json.dumps(sub_msg))
                 logger.info(f"Subscribed: orderbook.{self.depth}.{symbol}")
 
-            # Start sampling loop in background
-            sample_task = asyncio.create_task(self._sample_loop(end_time))
-
-            # Process incoming messages
-            try:
+            # Run message receiver and sampler concurrently
+            async def receive_messages():
                 async for raw_msg in ws:
                     if time.monotonic() >= end_time:
                         break
@@ -202,12 +199,11 @@ class WSCollector:
                         self._handle_message(msg)
                     except json.JSONDecodeError:
                         continue
-            finally:
-                sample_task.cancel()
-                try:
-                    await sample_task
-                except asyncio.CancelledError:
-                    pass
+
+            await asyncio.gather(
+                receive_messages(),
+                self._sample_loop(end_time),
+            )
 
     def _handle_message(self, msg: dict) -> None:
         """Process a single WebSocket message."""
