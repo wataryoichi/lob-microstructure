@@ -660,5 +660,29 @@ def paper_status(
     conn.close()
 
 
+@app.command()
+def analyze_execution(
+    db_path: str = typer.Option("results/paper_trades.db", "--db"),
+    save: bool = typer.Option(True, "--save/--no-save", help="Save to reports/"),
+) -> None:
+    """Analyze execution quality from Paper Trading logs."""
+    from pathlib import Path
+
+    from .execution_analytics import generate_execution_report
+
+    if not Path(db_path).exists():
+        typer.echo("No paper trading database found.")
+        raise typer.Exit(1)
+
+    report = generate_execution_report(db_path)
+    typer.echo(report)
+
+    if save:
+        out = Path("reports/execution_analysis.md")
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(report)
+        typer.echo(f"\nSaved to {out}")
+
+
 if __name__ == "__main__":
     app()
