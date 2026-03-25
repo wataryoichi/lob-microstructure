@@ -109,6 +109,7 @@ def build_features(
         horizon=cfg.labeling.horizon_steps,
         ternary_epsilon=cfg.labeling.ternary_epsilon,
     )
+    feat_df = feat_df.copy()  # defragment
     feat_df["label"] = labels
 
     # Save
@@ -167,7 +168,11 @@ def train(
     y_train_fit = y_train[:-val_size]
 
     n_classes = len(set(y_train))
-    typer.echo(f"Train: {len(X_train_fit)}, Val: {len(X_val)}, Test: {len(X_test)}, Classes: {n_classes}")
+    # Verify all splits have all classes
+    train_classes = set(y_train_fit)
+    val_classes = set(y_val)
+    test_classes = set(y_test)
+    typer.echo(f"Train: {len(X_train_fit)} (classes: {train_classes}), Val: {len(X_val)} (classes: {val_classes}), Test: {len(X_test)} (classes: {test_classes})")
 
     # Train
     model = get_model(
@@ -224,9 +229,10 @@ def train(
         if k.startswith("f1_class_"):
             typer.echo(f"  {k}: {v:.4f}")
     typer.echo(f"Train time: {result.train_time_sec:.1f}s")
-    if cfg.cost.enabled:
-        typer.echo(f"Net PnL (maker): {result.trading_metrics['net_pnl_maker_bps']:.1f} bps")
-        typer.echo(f"Sharpe: {result.trading_metrics['sharpe']:.2f}")
+    typer.echo(f"Avg gross: {result.trading_metrics['avg_gross_bps']:.2f} bps/trade")
+    typer.echo(f"Avg net (maker): {result.trading_metrics['avg_net_maker_bps']:.2f} bps/trade")
+    typer.echo(f"Hit ratio: {result.trading_metrics['hit_ratio']:.4f}")
+    typer.echo(f"Sharpe: {result.trading_metrics['sharpe']:.2f}")
 
 
 @app.command()
@@ -311,6 +317,48 @@ def backtest(
     if not cfg.cost.enabled:
         typer.echo("Note: cost.enabled=false in config. Set to true for realistic backtest.")
     train(config=config)
+
+
+@app.command()
+def run_experiments(
+    config: str = typer.Option("configs/paper_reproduction.yaml", "--config", "-c"),
+    mode: str = typer.Option("full", "--mode", "-m", help="full / depth / quick"),
+) -> None:
+    """Run comprehensive experiment suite (paper reproduction)."""
+    from .config import load_config
+    from .data_loader import load_lob_data
+    from .experiments import (
+        format_paper_table,
+        run_depth_comparison,
+        run_paper_reproduction,
+    )
+
+    cfg = load_config(config)
+
+    raw_df = load_lob_data(cfg.data.raw_dir, cfg.data.symbol)
+    if raw_df.empty:
+        typer.echo("No data found. Run fetch-data first.")
+        raise typer.Exit(1)
+
+    if mode == "depth":
+        df = run_depth_comparison(raw_df, output_dir=cfg.output.results_dir, seed=cfg.model.seed)
+    else:
+        df = run_paper_reproduction(raw_df, output_dir=cfg.output.results_dir, seed=cfg.model.seed)
+
+    ok_df = df[df["status"] == "ok"]
+    if ok_df.empty:
+        typer.echo("No successful experiments.")
+        return
+
+    # Print binary table
+    if "binary" in ok_df["label_scheme"].values:
+        typer.echo("\n" + format_paper_table(ok_df, "binary"))
+    if "ternary" in ok_df["label_scheme"].values:
+        typer.echo("\n" + format_paper_table(ok_df, "ternary"))
+
+    # Best result
+    best = ok_df.loc[ok_df["f1_macro"].idxmax()]
+    typer.echo(f"\nBest: {best['experiment']} -> F1={best['f1_macro']:.4f}, Acc={best['accuracy']:.4f}")
 
 
 if __name__ == "__main__":

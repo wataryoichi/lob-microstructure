@@ -88,7 +88,7 @@ def run_single_backtest(
         f"{model_name}: Acc={cls_metrics['accuracy']:.4f}, "
         f"F1={cls_metrics['f1_macro']:.4f}, "
         f"Trades={trade_metrics['n_trades']}, "
-        f"Net PnL(maker)={trade_metrics['net_pnl_maker_bps']:.1f}bps, "
+        f"AvgNet(maker)={trade_metrics['avg_net_maker_bps']:.2f}bps/trade, "
         f"Time={train_time:.1f}s"
     )
 

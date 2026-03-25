@@ -104,12 +104,17 @@ class XGBoostModel(BaseModel):
             learning_rate=learning_rate,
             max_depth=max_depth,
             random_state=seed,
-            eval_metric="mlogloss",
             verbosity=0,
             **kwargs,
         )
 
     def fit(self, X_train, y_train, X_val=None, y_val=None, sample_weight=None):
+        n_classes = len(np.unique(y_train))
+        if n_classes == 2:
+            self.model.set_params(objective="binary:logistic", eval_metric="logloss")
+        else:
+            self.model.set_params(objective="multi:softprob", eval_metric="mlogloss", num_class=n_classes)
+
         fit_params: dict[str, Any] = {}
         if sample_weight is not None:
             fit_params["sample_weight"] = sample_weight

@@ -99,28 +99,36 @@ def compute_trading_metrics(
     maker_cost = (maker_fee_bps + slippage_bps) * 2 * bps  # round-trip maker
 
     n_trades = int(valid.sum())
-    gross_pnl = float(trade_returns.sum())
-    net_pnl_taker = float(trade_returns.sum() - n_trades * cost_per_trade)
-    net_pnl_maker = float(trade_returns.sum() - n_trades * maker_cost)
 
     # Per-trade stats
     avg_return = float(trade_returns.mean()) if n_trades > 0 else 0.0
     hit_ratio = float((trade_returns > 0).mean()) if n_trades > 0 else 0.0
 
-    # Sharpe-like metric (annualized assuming 100ms intervals)
-    # ~86400 * 10 = 864000 intervals per day, ~365 days per year
+    # PnL in bps (average per trade)
+    avg_gross_bps = avg_return / bps
+    avg_net_taker_bps = (avg_return - cost_per_trade) / bps
+    avg_net_maker_bps = (avg_return - maker_cost) / bps
+
+    # Cumulative PnL in bps
+    total_gross_bps = float(trade_returns.sum()) / bps
+    total_net_maker_bps = total_gross_bps - n_trades * maker_cost / bps
+
+    # Sharpe: annualized from per-trade returns
+    # 100ms intervals -> 10 trades/sec -> 36000/hr -> ~864000/day (24h)
+    trades_per_day = 86400 * 1000 / (horizon * 100)  # max possible trades per day
     if trade_returns.std() > 1e-12:
-        intervals_per_year = 864000 * 365
-        sharpe = avg_return / trade_returns.std() * np.sqrt(intervals_per_year / horizon)
+        daily_sharpe = avg_return / trade_returns.std() * np.sqrt(trades_per_day)
+        sharpe = daily_sharpe * np.sqrt(365)
     else:
         sharpe = 0.0
 
     return {
         "n_trades": n_trades,
-        "gross_pnl_bps": gross_pnl / bps,
-        "net_pnl_taker_bps": net_pnl_taker / bps,
-        "net_pnl_maker_bps": net_pnl_maker / bps,
-        "avg_return_bps": avg_return / bps,
+        "avg_gross_bps": avg_gross_bps,
+        "avg_net_taker_bps": avg_net_taker_bps,
+        "avg_net_maker_bps": avg_net_maker_bps,
+        "total_gross_bps": total_gross_bps,
+        "total_net_maker_bps": total_net_maker_bps,
         "hit_ratio": hit_ratio,
         "sharpe": float(sharpe),
         "max_drawdown_bps": float(_max_drawdown(trade_returns) / bps),

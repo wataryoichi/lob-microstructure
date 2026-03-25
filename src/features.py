@@ -212,7 +212,7 @@ def normalize_features(
     Uses [t-window, ..., t-1] statistics to avoid lookahead bias.
     """
     if exclude_cols is None:
-        exclude_cols = ["timestamp"]
+        exclude_cols = ["timestamp", "mid_price"]
 
     feature_cols = [c for c in df.columns if c not in exclude_cols]
     result = df.copy()
