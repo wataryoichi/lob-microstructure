@@ -1,8 +1,9 @@
 data/raw/
 data/interim/
 data/processed/
-results/
-reports/
+results/*.json
+results/*.csv
+reports/*.png
 __pycache__/
 *.pyc
 .pytest_cache/
