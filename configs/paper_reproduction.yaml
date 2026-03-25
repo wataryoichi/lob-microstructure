@@ -1,0 +1,31 @@
+# Paper reproduction configuration
+# Matches Wang (2025) experimental setup as closely as possible
+inherit: base.yaml
+
+data:
+  lob_depth: 40
+
+preprocessing:
+  filter_type: savitzky_golay
+  sg_window: 21
+  sg_polyorder: 3
+
+labeling:
+  scheme: binary
+  horizon_ms: 500
+  horizon_steps: 5
+
+features:
+  depth_levels: [5, 10, 40]
+  sequence_length: 1
+
+model:
+  type: xgboost
+  seed: 42
+
+training:
+  train_ratio: 0.8
+  n_snapshots: 100000
+
+cost:
+  enabled: false    # paper reports gross metrics

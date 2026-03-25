@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lob-microstructure"
+version = "0.1.0"
+description = "LOB Microstructure Trading: Better Inputs Matter More Than Stacking Another Hidden Layer"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "pyyaml>=6.0",
+    "typer>=0.9",
+    "rich>=13.0",
+    "scikit-learn>=1.3",
+    "xgboost>=2.0",
+    "catboost>=1.2",
+    "pyarrow>=14.0",
+    "requests>=2.31",
+    "websockets>=12.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+deep = [
+    "torch>=2.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

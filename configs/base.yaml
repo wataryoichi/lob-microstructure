@@ -1,0 +1,57 @@
+# Base configuration for LOB Microstructure project
+data:
+  exchange: bybit
+  symbol: BTCUSDT
+  snapshot_interval_ms: 100
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+  lob_depth: 40          # max depth levels to use
+  format: parquet         # storage format
+
+preprocessing:
+  filter_type: savitzky_golay   # raw / savitzky_golay / kalman
+  sg_window: 21                 # Savitzky-Golay window size (must be odd)
+  sg_polyorder: 3               # Savitzky-Golay polynomial degree
+  kalman_q: 0.001               # Kalman process noise (paper doesn't specify)
+  kalman_r: 0.1                 # Kalman measurement noise (paper doesn't specify)
+  normalize: true               # z-score normalization
+  normalize_window: 1000        # rolling window for normalization
+
+labeling:
+  scheme: binary                # binary / ternary
+  horizon_ms: 500               # prediction horizon in ms (100, 500, 1000)
+  horizon_steps: 5              # horizon in timesteps (horizon_ms / interval_ms)
+  ternary_epsilon: 0.0001       # threshold for stationary class
+
+features:
+  depth_levels: [5, 10, 40]     # LOB depth levels to test
+  sequence_length: 1            # T=1 (single snapshot) or T=10
+  include_raw_lob: true         # include raw bid/ask prices and volumes
+  include_imbalance: true       # include order imbalance features
+  include_spread: true          # include bid-ask spread
+  include_weighted_mid: true    # include weighted mid-price change
+
+model:
+  type: xgboost                 # logistic_regression / xgboost / catboost / deeplob / cnn_lstm
+  seed: 42
+  n_estimators: 500
+  learning_rate: 0.05
+  max_depth: 6
+  early_stopping_rounds: 50
+
+training:
+  train_ratio: 0.8
+  val_ratio: 0.2                # fraction of train set used for validation
+  n_snapshots: 100000           # total snapshots to use
+
+cost:
+  enabled: true
+  maker_fee_bps: 1.0            # Bybit maker fee
+  taker_fee_bps: 5.5            # Bybit taker fee
+  slippage_bps: 1.0             # estimated slippage
+
+output:
+  results_dir: results
+  reports_dir: reports
+  plots_format: png
