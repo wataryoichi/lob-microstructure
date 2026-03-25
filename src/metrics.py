@@ -122,18 +122,38 @@ def compute_trading_metrics(
     else:
         sharpe = 0.0
 
+    # Profit factor
+    wins = trade_returns[trade_returns > 0].sum()
+    losses = abs(trade_returns[trade_returns < 0].sum())
+    profit_factor = float(wins / losses) if losses > 0 else float("inf")
+
+    # Average favorable/adverse move (for edge analysis)
+    winning = trade_returns[trade_returns > 0]
+    losing = trade_returns[trade_returns < 0]
+    avg_win_bps = float(winning.mean() / bps) if len(winning) > 0 else 0.0
+    avg_loss_bps = float(losing.mean() / bps) if len(losing) > 0 else 0.0
+
+    # Breakeven gap: how far from net=0
+    breakeven_gap_bps = abs(min(0, avg_net_maker_bps))
+
     return {
+        # PRIMARY (trading-first)
         "n_trades": n_trades,
         "avg_gross_bps": avg_gross_bps,
-        "avg_net_taker_bps": avg_net_taker_bps,
         "avg_net_maker_bps": avg_net_maker_bps,
+        "avg_net_taker_bps": avg_net_taker_bps,
         "total_gross_bps": total_gross_bps,
         "total_net_maker_bps": total_net_maker_bps,
+        "breakeven_gap_bps": breakeven_gap_bps,
         "hit_ratio": hit_ratio,
+        "profit_factor": profit_factor,
         "sharpe": float(sharpe),
         "max_drawdown_bps": float(_max_drawdown(trade_returns) / bps),
-        "cost_per_trade_taker_bps": cost_per_trade / bps,
+        "avg_win_bps": avg_win_bps,
+        "avg_loss_bps": avg_loss_bps,
+        # Cost info
         "cost_per_trade_maker_bps": maker_cost / bps,
+        "cost_per_trade_taker_bps": cost_per_trade / bps,
     }
 
 
