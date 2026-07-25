@@ -5097,3 +5097,327 @@
 2026-03-26 17:48:04,028 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69938.50 (imb=-1.0691, rank=0.000, spread=0.10)
 2026-03-26 17:48:04,846 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69938.50
 2026-03-26 17:48:08,826 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69950.10 (imb=0.9112, rank=0.943, spread=0.10)
+2026-03-26 17:48:49,145 [INFO] src.paper_trader: [A_5pct_60s] Status: 285 trades, net=-526.5bps, win=35.4%, open=1
+2026-03-26 17:48:49,155 [INFO] src.paper_trader: [B_10pct_120s] Status: 147 trades, net=-232.5bps, win=38.8%, open=0
+2026-03-26 17:49:04,894 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69938.50 exit=69917.20 gross=+3.05 net=+2.05 (maker) [total: 286 trades, net=-524.5bps]
+2026-03-26 17:49:49,182 [INFO] src.paper_trader: [A_5pct_60s] Status: 286 trades, net=-524.5bps, win=35.7%, open=0
+2026-03-26 17:49:49,190 [INFO] src.paper_trader: [B_10pct_120s] Status: 147 trades, net=-232.5bps, win=38.8%, open=0
+2026-03-26 17:50:05,338 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69921.60 (imb=0.9224, rank=0.968, spread=0.10)
+2026-03-26 17:50:14,498 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69933.40 (imb=1.0801, rank=1.000, spread=0.10)
+2026-03-26 17:50:15,522 [INFO] src.paper_trader: [B_10pct_120s] FILL: long @ 69933.40
+2026-03-26 17:50:49,210 [INFO] src.paper_trader: [A_5pct_60s] Status: 286 trades, net=-524.5bps, win=35.7%, open=0
+2026-03-26 17:50:49,222 [INFO] src.paper_trader: [B_10pct_120s] Status: 147 trades, net=-232.5bps, win=38.8%, open=1
+2026-03-26 17:51:10,504 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69977.80 (imb=0.9753, rank=0.981, spread=0.10)
+2026-03-26 17:51:49,259 [INFO] src.paper_trader: [A_5pct_60s] Status: 286 trades, net=-524.5bps, win=35.7%, open=0
+2026-03-26 17:51:49,274 [INFO] src.paper_trader: [B_10pct_120s] Status: 147 trades, net=-232.5bps, win=38.8%, open=1
+2026-03-26 17:52:15,614 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: long entry=69933.40 exit=69921.80 gross=-1.66 net=-2.66 (maker) [total: 148 trades, net=-235.1bps]
+2026-03-26 17:52:40,982 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69917.00 (imb=-0.9375, rank=0.042, spread=0.10)
+2026-03-26 17:52:45,418 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69917.00
+2026-03-26 17:52:49,373 [INFO] src.paper_trader: [A_5pct_60s] Status: 286 trades, net=-524.5bps, win=35.7%, open=1
+2026-03-26 17:52:49,398 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=0
+2026-03-26 17:53:45,519 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69917.00 exit=69907.60 gross=+1.34 net=+0.34 (maker) [total: 287 trades, net=-524.1bps]
+2026-03-26 17:53:49,394 [INFO] src.paper_trader: [A_5pct_60s] Status: 287 trades, net=-524.1bps, win=35.9%, open=0
+2026-03-26 17:53:49,408 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=0
+2026-03-26 17:54:21,552 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69900.00 (imb=0.8288, rank=0.930, spread=0.10)
+2026-03-26 17:54:49,402 [INFO] src.paper_trader: [A_5pct_60s] Status: 287 trades, net=-524.1bps, win=35.9%, open=0
+2026-03-26 17:54:49,414 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=0
+2026-03-26 17:54:59,906 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69938.10 (imb=-0.8849, rank=0.050, spread=0.10)
+2026-03-26 17:55:49,482 [INFO] src.paper_trader: [A_5pct_60s] Status: 287 trades, net=-524.1bps, win=35.9%, open=0
+2026-03-26 17:55:49,486 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=0
+2026-03-26 17:56:08,066 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69997.70 (imb=1.0019, rank=1.000, spread=0.10)
+2026-03-26 17:56:28,750 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 70014.00 (imb=-0.7968, rank=0.090, spread=0.10)
+2026-03-26 17:56:49,554 [INFO] src.paper_trader: [A_5pct_60s] Status: 287 trades, net=-524.1bps, win=35.9%, open=0
+2026-03-26 17:56:49,562 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=0
+2026-03-26 17:57:13,198 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 70002.90 (imb=0.9739, rank=0.961, spread=0.10)
+2026-03-26 17:57:14,614 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 70002.90
+2026-03-26 17:57:49,646 [INFO] src.paper_trader: [A_5pct_60s] Status: 287 trades, net=-524.1bps, win=35.9%, open=1
+2026-03-26 17:57:49,654 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=0
+2026-03-26 17:58:14,675 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=70002.90 exit=69986.60 gross=-2.33 net=-3.33 (maker) [total: 288 trades, net=-527.5bps]
+2026-03-26 17:58:36,634 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69988.70 (imb=0.8722, rank=0.915, spread=0.10)
+2026-03-26 17:58:40,566 [INFO] src.paper_trader: [B_10pct_120s] FILL: long @ 69988.70
+2026-03-26 17:58:49,659 [INFO] src.paper_trader: [A_5pct_60s] Status: 288 trades, net=-527.5bps, win=35.8%, open=0
+2026-03-26 17:58:49,666 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=1
+2026-03-26 17:59:14,794 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69988.80 (imb=0.9468, rank=0.953, spread=0.10)
+2026-03-26 17:59:49,730 [INFO] src.paper_trader: [A_5pct_60s] Status: 288 trades, net=-527.5bps, win=35.8%, open=0
+2026-03-26 17:59:49,734 [INFO] src.paper_trader: [B_10pct_120s] Status: 148 trades, net=-235.1bps, win=38.5%, open=1
+2026-03-26 18:00:26,770 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69966.50 (imb=1.0641, rank=1.000, spread=0.10)
+2026-03-26 18:00:28,882 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 69966.50
+2026-03-26 18:00:40,625 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: long entry=69988.70 exit=69941.20 gross=-6.79 net=-7.79 (maker) [total: 149 trades, net=-242.9bps]
+2026-03-26 18:00:49,810 [INFO] src.paper_trader: [A_5pct_60s] Status: 288 trades, net=-527.5bps, win=35.8%, open=1
+2026-03-26 18:00:49,826 [INFO] src.paper_trader: [B_10pct_120s] Status: 149 trades, net=-242.9bps, win=38.3%, open=0
+2026-03-26 18:01:28,900 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=69966.50 exit=69917.20 gross=-7.05 net=-8.05 (maker) [total: 289 trades, net=-535.5bps]
+2026-03-26 18:01:49,866 [INFO] src.paper_trader: [A_5pct_60s] Status: 289 trades, net=-535.5bps, win=35.6%, open=0
+2026-03-26 18:01:49,882 [INFO] src.paper_trader: [B_10pct_120s] Status: 149 trades, net=-242.9bps, win=38.3%, open=0
+2026-03-26 18:02:32,007 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69956.20 (imb=0.9854, rank=0.967, spread=0.10)
+2026-03-26 18:02:33,443 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 69956.20
+2026-03-26 18:02:42,426 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69951.20 (imb=0.9497, rank=0.940, spread=0.10)
+2026-03-26 18:02:49,958 [INFO] src.paper_trader: [A_5pct_60s] Status: 289 trades, net=-535.5bps, win=35.6%, open=1
+2026-03-26 18:02:49,970 [INFO] src.paper_trader: [B_10pct_120s] Status: 149 trades, net=-242.9bps, win=38.3%, open=0
+2026-03-26 18:03:33,494 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=69956.20 exit=69946.40 gross=-1.40 net=-2.40 (maker) [total: 290 trades, net=-537.9bps]
+2026-03-26 18:03:49,990 [INFO] src.paper_trader: [A_5pct_60s] Status: 290 trades, net=-537.9bps, win=35.5%, open=0
+2026-03-26 18:03:50,002 [INFO] src.paper_trader: [B_10pct_120s] Status: 149 trades, net=-242.9bps, win=38.3%, open=0
+2026-03-26 18:04:35,655 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69932.70 (imb=1.0166, rank=1.000, spread=0.10)
+2026-03-26 18:04:48,050 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69934.10 (imb=-0.8374, rank=0.096, spread=0.10)
+2026-03-26 18:04:49,170 [INFO] src.paper_trader: [B_10pct_120s] FILL: short @ 69934.10
+2026-03-26 18:04:49,982 [INFO] src.paper_trader: [A_5pct_60s] Status: 290 trades, net=-537.9bps, win=35.5%, open=0
+2026-03-26 18:04:49,990 [INFO] src.paper_trader: [B_10pct_120s] Status: 149 trades, net=-242.9bps, win=38.3%, open=1
+2026-03-26 18:05:46,242 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69993.40 (imb=1.0024, rank=1.000, spread=0.10)
+2026-03-26 18:05:50,090 [INFO] src.paper_trader: [A_5pct_60s] Status: 290 trades, net=-537.9bps, win=35.5%, open=0
+2026-03-26 18:05:50,098 [INFO] src.paper_trader: [B_10pct_120s] Status: 149 trades, net=-242.9bps, win=38.3%, open=1
+2026-03-26 18:06:49,238 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: short entry=69934.10 exit=70019.70 gross=-12.24 net=-13.24 (maker) [total: 150 trades, net=-256.2bps]
+2026-03-26 18:06:50,162 [INFO] src.paper_trader: [A_5pct_60s] Status: 290 trades, net=-537.9bps, win=35.5%, open=0
+2026-03-26 18:06:50,179 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=0
+2026-03-26 18:06:52,730 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 70021.80 (imb=0.9500, rank=0.959, spread=0.10)
+2026-03-26 18:07:50,238 [INFO] src.paper_trader: [A_5pct_60s] Status: 290 trades, net=-537.9bps, win=35.5%, open=0
+2026-03-26 18:07:50,246 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=0
+2026-03-26 18:07:57,906 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 70026.50 (imb=1.0977, rank=1.000, spread=0.10)
+2026-03-26 18:08:50,250 [INFO] src.paper_trader: [A_5pct_60s] Status: 290 trades, net=-537.9bps, win=35.5%, open=0
+2026-03-26 18:08:50,258 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=0
+2026-03-26 18:08:54,610 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 70077.20 (imb=0.9687, rank=0.973, spread=0.10)
+2026-03-26 18:09:03,598 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 70108.80 (imb=-0.9046, rank=0.014, spread=0.10)
+2026-03-26 18:09:04,718 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 70108.80
+2026-03-26 18:09:50,302 [INFO] src.paper_trader: [A_5pct_60s] Status: 290 trades, net=-537.9bps, win=35.5%, open=1
+2026-03-26 18:09:50,318 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=0
+2026-03-26 18:10:04,758 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=70108.80 exit=70041.60 gross=+9.59 net=+8.59 (maker) [total: 291 trades, net=-529.3bps]
+2026-03-26 18:10:50,390 [INFO] src.paper_trader: [A_5pct_60s] Status: 291 trades, net=-529.3bps, win=35.7%, open=0
+2026-03-26 18:10:50,404 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=0
+2026-03-26 18:11:00,931 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 70060.00 (imb=-0.9598, rank=0.019, spread=0.10)
+2026-03-26 18:11:11,182 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 70037.60 (imb=0.9520, rank=0.954, spread=0.10)
+2026-03-26 18:11:50,482 [INFO] src.paper_trader: [A_5pct_60s] Status: 291 trades, net=-529.3bps, win=35.7%, open=0
+2026-03-26 18:11:50,494 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=0
+2026-03-26 18:12:16,710 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 70045.30 (imb=-0.9297, rank=0.046, spread=0.10)
+2026-03-26 18:12:50,506 [INFO] src.paper_trader: [A_5pct_60s] Status: 291 trades, net=-529.3bps, win=35.7%, open=0
+2026-03-26 18:12:50,518 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=0
+2026-03-26 18:13:08,026 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 70031.70 (imb=0.9089, rank=0.939, spread=0.10)
+2026-03-26 18:13:12,934 [INFO] src.paper_trader: [B_10pct_120s] FILL: long @ 70031.70
+2026-03-26 18:13:26,478 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 70021.10 (imb=-1.0241, rank=0.000, spread=0.10)
+2026-03-26 18:13:50,586 [INFO] src.paper_trader: [A_5pct_60s] Status: 291 trades, net=-529.3bps, win=35.7%, open=0
+2026-03-26 18:13:50,602 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=1
+2026-03-26 18:14:33,542 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 70022.50 (imb=-0.9488, rank=0.043, spread=0.10)
+2026-03-26 18:14:50,674 [INFO] src.paper_trader: [A_5pct_60s] Status: 291 trades, net=-529.3bps, win=35.7%, open=0
+2026-03-26 18:14:50,686 [INFO] src.paper_trader: [B_10pct_120s] Status: 150 trades, net=-256.2bps, win=38.0%, open=1
+2026-03-26 18:15:13,023 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: long entry=70031.70 exit=69985.60 gross=-6.58 net=-7.58 (maker) [total: 151 trades, net=-263.7bps]
+2026-03-26 18:15:38,679 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69983.90 (imb=0.9351, rank=0.966, spread=0.10)
+2026-03-26 18:15:43,234 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 69983.90
+2026-03-26 18:15:50,714 [INFO] src.paper_trader: [A_5pct_60s] Status: 291 trades, net=-529.3bps, win=35.7%, open=1
+2026-03-26 18:15:50,722 [INFO] src.paper_trader: [B_10pct_120s] Status: 151 trades, net=-263.7bps, win=37.7%, open=0
+2026-03-26 18:16:43,290 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=69983.90 exit=69932.80 gross=-7.30 net=-8.30 (maker) [total: 292 trades, net=-537.6bps]
+2026-03-26 18:16:50,786 [INFO] src.paper_trader: [A_5pct_60s] Status: 292 trades, net=-537.6bps, win=35.6%, open=0
+2026-03-26 18:16:50,794 [INFO] src.paper_trader: [B_10pct_120s] Status: 151 trades, net=-263.7bps, win=37.7%, open=0
+2026-03-26 18:17:17,458 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69887.60 (imb=1.0201, rank=1.000, spread=0.10)
+2026-03-26 18:17:45,288 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69894.40 (imb=1.0096, rank=1.000, spread=0.10)
+2026-03-26 18:17:50,837 [INFO] src.paper_trader: [A_5pct_60s] Status: 292 trades, net=-537.6bps, win=35.6%, open=0
+2026-03-26 18:17:50,841 [INFO] src.paper_trader: [B_10pct_120s] Status: 151 trades, net=-263.7bps, win=37.7%, open=0
+2026-03-26 18:18:50,925 [INFO] src.paper_trader: [A_5pct_60s] Status: 292 trades, net=-537.6bps, win=35.6%, open=0
+2026-03-26 18:18:50,930 [INFO] src.paper_trader: [B_10pct_120s] Status: 151 trades, net=-263.7bps, win=37.7%, open=0
+2026-03-26 18:18:54,450 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69865.10 (imb=-0.9931, rank=0.015, spread=0.10)
+2026-03-26 18:18:57,578 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69865.10
+2026-03-26 18:19:24,481 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69919.80 (imb=1.0072, rank=1.000, spread=0.10)
+2026-03-26 18:19:27,304 [INFO] src.paper_trader: [B_10pct_120s] FILL: long @ 69919.80
+2026-03-26 18:19:50,984 [INFO] src.paper_trader: [A_5pct_60s] Status: 292 trades, net=-537.6bps, win=35.6%, open=1
+2026-03-26 18:19:50,987 [INFO] src.paper_trader: [B_10pct_120s] Status: 151 trades, net=-263.7bps, win=37.7%, open=1
+2026-03-26 18:19:57,636 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69865.10 exit=69925.90 gross=-8.70 net=-9.70 (maker) [total: 293 trades, net=-547.3bps]
+2026-03-26 18:20:51,011 [INFO] src.paper_trader: [A_5pct_60s] Status: 293 trades, net=-547.3bps, win=35.5%, open=0
+2026-03-26 18:20:51,015 [INFO] src.paper_trader: [B_10pct_120s] Status: 151 trades, net=-263.7bps, win=37.7%, open=1
+2026-03-26 18:20:58,630 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69954.10 (imb=-1.0010, rank=0.000, spread=0.10)
+2026-03-26 18:21:27,366 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: long entry=69919.80 exit=69969.30 gross=+7.08 net=+6.08 (maker) [total: 152 trades, net=-257.7bps]
+2026-03-26 18:21:51,018 [INFO] src.paper_trader: [A_5pct_60s] Status: 293 trades, net=-547.3bps, win=35.5%, open=0
+2026-03-26 18:21:51,030 [INFO] src.paper_trader: [B_10pct_120s] Status: 152 trades, net=-257.7bps, win=38.2%, open=0
+2026-03-26 18:22:17,090 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69968.10 (imb=-0.9011, rank=0.050, spread=0.10)
+2026-03-26 18:22:18,119 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69968.10
+2026-03-26 18:22:51,066 [INFO] src.paper_trader: [A_5pct_60s] Status: 293 trades, net=-547.3bps, win=35.5%, open=1
+2026-03-26 18:22:51,074 [INFO] src.paper_trader: [B_10pct_120s] Status: 152 trades, net=-257.7bps, win=38.2%, open=0
+2026-03-26 18:23:18,142 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69968.10 exit=69960.00 gross=+1.16 net=+0.16 (maker) [total: 294 trades, net=-547.2bps]
+2026-03-26 18:23:33,294 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69944.30 (imb=-0.8008, rank=0.084, spread=0.10)
+2026-03-26 18:23:51,127 [INFO] src.paper_trader: [A_5pct_60s] Status: 294 trades, net=-547.2bps, win=35.7%, open=0
+2026-03-26 18:23:51,134 [INFO] src.paper_trader: [B_10pct_120s] Status: 152 trades, net=-257.7bps, win=38.2%, open=0
+2026-03-26 18:24:18,222 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69953.70 (imb=-1.0158, rank=0.000, spread=0.10)
+2026-03-26 18:24:22,167 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69953.70
+2026-03-26 18:24:51,148 [INFO] src.paper_trader: [A_5pct_60s] Status: 294 trades, net=-547.2bps, win=35.7%, open=1
+2026-03-26 18:24:51,166 [INFO] src.paper_trader: [B_10pct_120s] Status: 152 trades, net=-257.7bps, win=38.2%, open=0
+2026-03-26 18:25:22,242 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69953.70 exit=69941.10 gross=+1.80 net=+0.80 (maker) [total: 295 trades, net=-546.4bps]
+2026-03-26 18:25:47,354 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69952.30 (imb=0.6985, rank=0.900, spread=0.10)
+2026-03-26 18:25:48,978 [INFO] src.paper_trader: [B_10pct_120s] FILL: long @ 69952.30
+2026-03-26 18:25:51,197 [INFO] src.paper_trader: [A_5pct_60s] Status: 295 trades, net=-546.4bps, win=35.9%, open=0
+2026-03-26 18:25:51,204 [INFO] src.paper_trader: [B_10pct_120s] Status: 152 trades, net=-257.7bps, win=38.2%, open=1
+2026-03-26 18:26:24,807 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69925.40 (imb=0.8712, rank=0.958, spread=0.10)
+2026-03-26 18:26:51,251 [INFO] src.paper_trader: [A_5pct_60s] Status: 295 trades, net=-546.4bps, win=35.9%, open=0
+2026-03-26 18:26:51,254 [INFO] src.paper_trader: [B_10pct_120s] Status: 152 trades, net=-257.7bps, win=38.2%, open=1
+2026-03-26 18:27:29,957 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69973.20 (imb=1.1650, rank=1.000, spread=0.10)
+2026-03-26 18:27:49,017 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: long entry=69952.30 exit=69982.10 gross=+4.26 net=+3.26 (maker) [total: 153 trades, net=-254.4bps]
+2026-03-26 18:27:51,334 [INFO] src.paper_trader: [A_5pct_60s] Status: 295 trades, net=-546.4bps, win=35.9%, open=0
+2026-03-26 18:27:51,338 [INFO] src.paper_trader: [B_10pct_120s] Status: 153 trades, net=-254.4bps, win=38.6%, open=0
+2026-03-26 18:28:35,078 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 70009.90 (imb=1.1029, rank=1.000, spread=0.10)
+2026-03-26 18:28:36,190 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 70009.90
+2026-03-26 18:28:51,431 [INFO] src.paper_trader: [A_5pct_60s] Status: 295 trades, net=-546.4bps, win=35.9%, open=1
+2026-03-26 18:28:51,435 [INFO] src.paper_trader: [B_10pct_120s] Status: 153 trades, net=-254.4bps, win=38.6%, open=0
+2026-03-26 18:29:36,275 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=70009.90 exit=70004.30 gross=-0.80 net=-1.80 (maker) [total: 296 trades, net=-548.2bps]
+2026-03-26 18:29:50,992 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 70007.30 (imb=0.9494, rank=0.921, spread=0.10)
+2026-03-26 18:29:51,495 [INFO] src.paper_trader: [A_5pct_60s] Status: 296 trades, net=-548.2bps, win=35.8%, open=0
+2026-03-26 18:29:51,498 [INFO] src.paper_trader: [B_10pct_120s] Status: 153 trades, net=-254.4bps, win=38.6%, open=0
+2026-03-26 18:29:51,594 [INFO] src.paper_trader: [B_10pct_120s] FILL: long @ 70007.30
+2026-03-26 18:30:37,076 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69880.10 (imb=-1.0016, rank=0.000, spread=0.10)
+2026-03-26 18:30:51,538 [INFO] src.paper_trader: [A_5pct_60s] Status: 296 trades, net=-548.2bps, win=35.8%, open=0
+2026-03-26 18:30:51,566 [INFO] src.paper_trader: [B_10pct_120s] Status: 153 trades, net=-254.4bps, win=38.6%, open=1
+2026-03-26 18:31:42,638 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69606.10 (imb=1.0232, rank=1.000, spread=0.10)
+2026-03-26 18:31:43,550 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 69606.10
+2026-03-26 18:31:51,609 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: long entry=70007.30 exit=69627.30 gross=-54.28 net=-55.28 (maker) [total: 154 trades, net=-309.7bps]
+2026-03-26 18:31:51,636 [INFO] src.paper_trader: [A_5pct_60s] Status: 296 trades, net=-548.2bps, win=35.8%, open=1
+2026-03-26 18:31:51,640 [INFO] src.paper_trader: [B_10pct_120s] Status: 154 trades, net=-309.7bps, win=38.3%, open=0
+2026-03-26 18:32:43,616 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=69606.10 exit=69609.50 gross=+0.49 net=-0.51 (maker) [total: 297 trades, net=-548.7bps]
+2026-03-26 18:32:51,691 [INFO] src.paper_trader: [A_5pct_60s] Status: 297 trades, net=-548.7bps, win=35.7%, open=0
+2026-03-26 18:32:51,696 [INFO] src.paper_trader: [B_10pct_120s] Status: 154 trades, net=-309.7bps, win=38.3%, open=0
+2026-03-26 18:33:45,053 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69529.70 (imb=-1.0739, rank=0.000, spread=0.10)
+2026-03-26 18:33:45,742 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69529.70
+2026-03-26 18:33:51,810 [INFO] src.paper_trader: [A_5pct_60s] Status: 297 trades, net=-548.7bps, win=35.7%, open=1
+2026-03-26 18:33:51,853 [INFO] src.paper_trader: [B_10pct_120s] Status: 154 trades, net=-309.7bps, win=38.3%, open=0
+2026-03-26 18:33:53,586 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69518.30 (imb=0.9933, rank=0.969, spread=0.10)
+2026-03-26 18:33:55,511 [INFO] src.paper_trader: [B_10pct_120s] FILL: long @ 69518.30
+2026-03-26 18:34:45,800 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69529.70 exit=69442.40 gross=+12.56 net=+11.56 (maker) [total: 298 trades, net=-537.1bps]
+2026-03-26 18:34:51,841 [INFO] src.paper_trader: [A_5pct_60s] Status: 298 trades, net=-537.1bps, win=35.9%, open=0
+2026-03-26 18:34:51,844 [INFO] src.paper_trader: [B_10pct_120s] Status: 154 trades, net=-309.7bps, win=38.3%, open=1
+2026-03-26 18:35:50,420 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69510.30 (imb=1.0973, rank=1.000, spread=0.10)
+2026-03-26 18:35:51,932 [INFO] src.paper_trader: [A_5pct_60s] Status: 298 trades, net=-537.1bps, win=35.9%, open=0
+2026-03-26 18:35:51,935 [INFO] src.paper_trader: [B_10pct_120s] Status: 154 trades, net=-309.7bps, win=38.3%, open=1
+2026-03-26 18:35:55,555 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: long entry=69518.30 exit=69529.90 gross=+1.67 net=+0.67 (maker) [total: 155 trades, net=-309.0bps]
+2026-03-26 18:36:52,009 [INFO] src.paper_trader: [A_5pct_60s] Status: 298 trades, net=-537.1bps, win=35.9%, open=0
+2026-03-26 18:36:52,013 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:36:56,061 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69517.20 (imb=0.9755, rank=0.954, spread=0.10)
+2026-03-26 18:37:52,042 [INFO] src.paper_trader: [A_5pct_60s] Status: 298 trades, net=-537.1bps, win=35.9%, open=0
+2026-03-26 18:37:52,056 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:37:55,706 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69507.20 (imb=-0.9031, rank=0.059, spread=0.10)
+2026-03-26 18:38:01,682 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69486.60 (imb=-1.0401, rank=0.000, spread=0.10)
+2026-03-26 18:38:02,498 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69486.60
+2026-03-26 18:38:52,082 [INFO] src.paper_trader: [A_5pct_60s] Status: 298 trades, net=-537.1bps, win=35.9%, open=1
+2026-03-26 18:38:52,102 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:39:02,514 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69486.60 exit=69450.00 gross=+5.27 net=+4.27 (maker) [total: 299 trades, net=-532.9bps]
+2026-03-26 18:39:52,130 [INFO] src.paper_trader: [A_5pct_60s] Status: 299 trades, net=-532.9bps, win=36.1%, open=0
+2026-03-26 18:39:52,142 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:40:01,438 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69415.30 (imb=1.0136, rank=1.000, spread=0.10)
+2026-03-26 18:40:03,042 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69421.30 (imb=1.0088, rank=1.000, spread=0.10)
+2026-03-26 18:40:07,526 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 69421.30
+2026-03-26 18:40:52,246 [INFO] src.paper_trader: [A_5pct_60s] Status: 299 trades, net=-532.9bps, win=36.1%, open=1
+2026-03-26 18:40:52,270 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:41:07,574 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=69421.30 exit=69474.10 gross=+7.61 net=+6.61 (maker) [total: 300 trades, net=-526.3bps]
+2026-03-26 18:41:52,286 [INFO] src.paper_trader: [A_5pct_60s] Status: 300 trades, net=-526.3bps, win=36.3%, open=0
+2026-03-26 18:41:52,314 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:42:06,806 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69469.90 (imb=-0.8917, rank=0.083, spread=0.10)
+2026-03-26 18:42:10,718 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69459.80 (imb=-1.0991, rank=0.000, spread=0.10)
+2026-03-26 18:42:12,466 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69459.80
+2026-03-26 18:42:52,338 [INFO] src.paper_trader: [A_5pct_60s] Status: 300 trades, net=-526.3bps, win=36.3%, open=1
+2026-03-26 18:42:52,366 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:43:12,458 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69459.80 exit=69473.90 gross=-2.03 net=-3.03 (maker) [total: 301 trades, net=-529.3bps]
+2026-03-26 18:43:52,394 [INFO] src.paper_trader: [A_5pct_60s] Status: 301 trades, net=-529.3bps, win=36.2%, open=0
+2026-03-26 18:43:52,414 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:44:11,910 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69472.40 (imb=1.0523, rank=1.000, spread=0.10)
+2026-03-26 18:44:15,258 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69474.20 (imb=-1.0216, rank=0.000, spread=0.10)
+2026-03-26 18:44:17,601 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69474.20
+2026-03-26 18:44:52,474 [INFO] src.paper_trader: [A_5pct_60s] Status: 301 trades, net=-529.3bps, win=36.2%, open=1
+2026-03-26 18:44:52,498 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:45:17,586 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69474.20 exit=69480.20 gross=-0.86 net=-1.86 (maker) [total: 302 trades, net=-531.1bps]
+2026-03-26 18:45:52,510 [INFO] src.paper_trader: [A_5pct_60s] Status: 302 trades, net=-531.1bps, win=36.1%, open=0
+2026-03-26 18:45:52,538 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:46:17,858 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69430.10 (imb=-0.9485, rank=0.042, spread=0.10)
+2026-03-26 18:46:17,882 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69430.10 (imb=-0.9485, rank=0.042, spread=0.10)
+2026-03-26 18:46:52,548 [INFO] src.paper_trader: [A_5pct_60s] Status: 302 trades, net=-531.1bps, win=36.1%, open=0
+2026-03-26 18:46:52,570 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:47:23,010 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69453.60 (imb=-1.5087, rank=0.000, spread=0.10)
+2026-03-26 18:47:26,046 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69453.60
+2026-03-26 18:47:52,562 [INFO] src.paper_trader: [A_5pct_60s] Status: 302 trades, net=-531.1bps, win=36.1%, open=1
+2026-03-26 18:47:52,582 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:48:24,154 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69424.90 (imb=0.9339, rank=0.916, spread=0.10)
+2026-03-26 18:48:26,074 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69453.60 exit=69431.80 gross=+3.14 net=+2.14 (maker) [total: 303 trades, net=-529.0bps]
+2026-03-26 18:48:52,590 [INFO] src.paper_trader: [A_5pct_60s] Status: 303 trades, net=-529.0bps, win=36.3%, open=0
+2026-03-26 18:48:52,602 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:49:26,106 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69418.70 (imb=1.2137, rank=1.000, spread=0.10)
+2026-03-26 18:49:52,630 [INFO] src.paper_trader: [A_5pct_60s] Status: 303 trades, net=-529.0bps, win=36.3%, open=0
+2026-03-26 18:49:52,646 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=0
+2026-03-26 18:50:29,578 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69472.50 (imb=-0.8212, rank=0.074, spread=0.10)
+2026-03-26 18:50:31,730 [INFO] src.paper_trader: [B_10pct_120s] FILL: short @ 69472.50
+2026-03-26 18:50:33,242 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69476.90 (imb=-0.9669, rank=0.025, spread=0.10)
+2026-03-26 18:50:52,722 [INFO] src.paper_trader: [A_5pct_60s] Status: 303 trades, net=-529.0bps, win=36.3%, open=0
+2026-03-26 18:50:52,738 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=1
+2026-03-26 18:51:38,374 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69507.80 (imb=1.0576, rank=1.000, spread=0.10)
+2026-03-26 18:51:52,818 [INFO] src.paper_trader: [A_5pct_60s] Status: 303 trades, net=-529.0bps, win=36.3%, open=0
+2026-03-26 18:51:52,842 [INFO] src.paper_trader: [B_10pct_120s] Status: 155 trades, net=-309.0bps, win=38.7%, open=1
+2026-03-26 18:52:31,734 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: short entry=69472.50 exit=69514.90 gross=-6.10 net=-7.10 (maker) [total: 156 trades, net=-316.1bps]
+2026-03-26 18:52:46,746 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69533.90 (imb=0.9880, rank=0.988, spread=0.10)
+2026-03-26 18:52:47,766 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 69533.90
+2026-03-26 18:52:52,826 [INFO] src.paper_trader: [A_5pct_60s] Status: 303 trades, net=-529.0bps, win=36.3%, open=1
+2026-03-26 18:52:52,842 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 18:53:47,826 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=69533.90 exit=69552.40 gross=+2.66 net=+1.66 (maker) [total: 304 trades, net=-527.3bps]
+2026-03-26 18:53:52,922 [INFO] src.paper_trader: [A_5pct_60s] Status: 304 trades, net=-527.3bps, win=36.5%, open=0
+2026-03-26 18:53:52,950 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 18:54:32,342 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69560.00 (imb=-0.7527, rank=0.065, spread=0.10)
+2026-03-26 18:54:51,690 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69556.30 (imb=-0.8468, rank=0.037, spread=0.10)
+2026-03-26 18:54:52,930 [INFO] src.paper_trader: [A_5pct_60s] Status: 304 trades, net=-527.3bps, win=36.5%, open=0
+2026-03-26 18:54:52,962 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 18:54:53,246 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69556.30
+2026-03-26 18:55:52,931 [INFO] src.paper_trader: [A_5pct_60s] Status: 304 trades, net=-527.3bps, win=36.5%, open=1
+2026-03-26 18:55:52,970 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 18:55:53,350 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69556.30 exit=69555.20 gross=+0.16 net=-0.84 (maker) [total: 305 trades, net=-528.2bps]
+2026-03-26 18:56:43,802 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69549.30 (imb=0.9599, rank=0.964, spread=0.10)
+2026-03-26 18:56:52,990 [INFO] src.paper_trader: [A_5pct_60s] Status: 305 trades, net=-528.2bps, win=36.4%, open=0
+2026-03-26 18:56:53,014 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 18:56:55,462 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69539.70 (imb=-0.8625, rank=0.034, spread=0.10)
+2026-03-26 18:56:55,982 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69539.70
+2026-03-26 18:57:53,002 [INFO] src.paper_trader: [A_5pct_60s] Status: 305 trades, net=-528.2bps, win=36.4%, open=1
+2026-03-26 18:57:53,039 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 18:57:56,042 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69539.70 exit=69578.30 gross=-5.55 net=-6.55 (maker) [total: 306 trades, net=-534.7bps]
+2026-03-26 18:58:49,906 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69567.80 (imb=0.8275, rank=0.904, spread=0.10)
+2026-03-26 18:58:53,042 [INFO] src.paper_trader: [A_5pct_60s] Status: 306 trades, net=-534.7bps, win=36.3%, open=0
+2026-03-26 18:58:53,074 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 18:58:56,260 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69564.10 (imb=1.1519, rank=1.000, spread=0.10)
+2026-03-26 18:59:53,066 [INFO] src.paper_trader: [A_5pct_60s] Status: 306 trades, net=-534.7bps, win=36.3%, open=0
+2026-03-26 18:59:53,086 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 19:00:01,710 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69546.90 (imb=1.0117, rank=1.000, spread=0.10)
+2026-03-26 19:00:03,350 [INFO] src.paper_trader: [A_5pct_60s] FILL: long @ 69546.90
+2026-03-26 19:00:53,110 [INFO] src.paper_trader: [A_5pct_60s] Status: 306 trades, net=-534.7bps, win=36.3%, open=1
+2026-03-26 19:00:53,134 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=0
+2026-03-26 19:00:55,258 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69538.30 (imb=-0.9202, rank=0.052, spread=0.10)
+2026-03-26 19:00:59,542 [INFO] src.paper_trader: [B_10pct_120s] FILL: short @ 69538.30
+2026-03-26 19:01:03,414 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: long entry=69546.90 exit=69523.30 gross=-3.39 net=-4.39 (maker) [total: 307 trades, net=-539.1bps]
+2026-03-26 19:01:53,158 [INFO] src.paper_trader: [A_5pct_60s] Status: 307 trades, net=-539.1bps, win=36.2%, open=0
+2026-03-26 19:01:53,190 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=1
+2026-03-26 19:02:05,222 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69534.50 (imb=1.0682, rank=1.000, spread=0.10)
+2026-03-26 19:02:53,238 [INFO] src.paper_trader: [A_5pct_60s] Status: 307 trades, net=-539.1bps, win=36.2%, open=0
+2026-03-26 19:02:53,270 [INFO] src.paper_trader: [B_10pct_120s] Status: 156 trades, net=-316.1bps, win=38.5%, open=1
+2026-03-26 19:02:59,586 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: short entry=69538.30 exit=69513.80 gross=+3.52 net=+2.52 (maker) [total: 157 trades, net=-313.6bps]
+2026-03-26 19:03:11,418 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69480.10 (imb=-0.9447, rank=0.043, spread=0.10)
+2026-03-26 19:03:11,846 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69480.10
+2026-03-26 19:03:53,350 [INFO] src.paper_trader: [A_5pct_60s] Status: 307 trades, net=-539.1bps, win=36.2%, open=1
+2026-03-26 19:03:53,390 [INFO] src.paper_trader: [B_10pct_120s] Status: 157 trades, net=-313.6bps, win=38.9%, open=0
+2026-03-26 19:04:11,894 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69480.10 exit=69500.00 gross=-2.86 net=-3.86 (maker) [total: 308 trades, net=-543.0bps]
+2026-03-26 19:04:53,410 [INFO] src.paper_trader: [A_5pct_60s] Status: 308 trades, net=-543.0bps, win=36.0%, open=0
+2026-03-26 19:04:53,446 [INFO] src.paper_trader: [B_10pct_120s] Status: 157 trades, net=-313.6bps, win=38.9%, open=0
+2026-03-26 19:04:59,798 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69506.20 (imb=-0.8635, rank=0.084, spread=0.10)
+2026-03-26 19:05:04,698 [INFO] src.paper_trader: [B_10pct_120s] FILL: short @ 69506.20
+2026-03-26 19:05:12,458 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69496.70 (imb=-1.0059, rank=0.000, spread=0.10)
+2026-03-26 19:05:16,523 [INFO] src.paper_trader: [A_5pct_60s] FILL: short @ 69496.70
+2026-03-26 19:05:53,487 [INFO] src.paper_trader: [A_5pct_60s] Status: 308 trades, net=-543.0bps, win=36.0%, open=1
+2026-03-26 19:05:53,534 [INFO] src.paper_trader: [B_10pct_120s] Status: 157 trades, net=-313.6bps, win=38.9%, open=1
+2026-03-26 19:06:16,495 [INFO] src.paper_trader: [A_5pct_60s] CLOSE: short entry=69496.70 exit=69547.20 gross=-7.27 net=-8.27 (maker) [total: 309 trades, net=-551.3bps]
+2026-03-26 19:06:53,598 [INFO] src.paper_trader: [A_5pct_60s] Status: 309 trades, net=-551.3bps, win=35.9%, open=0
+2026-03-26 19:06:53,638 [INFO] src.paper_trader: [B_10pct_120s] Status: 157 trades, net=-313.6bps, win=38.9%, open=1
+2026-03-26 19:07:04,802 [INFO] src.paper_trader: [B_10pct_120s] CLOSE: short entry=69506.20 exit=69585.30 gross=-11.38 net=-12.38 (maker) [total: 158 trades, net=-326.0bps]
+2026-03-26 19:07:20,214 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69585.70 (imb=-1.1327, rank=0.000, spread=0.10)
+2026-03-26 19:07:53,702 [INFO] src.paper_trader: [A_5pct_60s] Status: 309 trades, net=-551.3bps, win=35.9%, open=0
+2026-03-26 19:07:53,762 [INFO] src.paper_trader: [B_10pct_120s] Status: 158 trades, net=-326.0bps, win=38.6%, open=0
+2026-03-26 19:08:25,546 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69551.20 (imb=-1.0301, rank=0.000, spread=0.10)
+2026-03-26 19:08:53,734 [INFO] src.paper_trader: [A_5pct_60s] Status: 309 trades, net=-551.3bps, win=35.9%, open=0
+2026-03-26 19:08:53,778 [INFO] src.paper_trader: [B_10pct_120s] Status: 158 trades, net=-326.0bps, win=38.6%, open=0
+2026-03-26 19:09:08,950 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69490.10 (imb=0.8221, rank=0.903, spread=0.10)
+2026-03-26 19:09:31,998 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69533.70 (imb=0.9446, rank=0.977, spread=0.10)
+2026-03-26 19:09:53,738 [INFO] src.paper_trader: [A_5pct_60s] Status: 309 trades, net=-551.3bps, win=35.9%, open=0
+2026-03-26 19:09:53,751 [INFO] src.paper_trader: [B_10pct_120s] Status: 158 trades, net=-326.0bps, win=38.6%, open=0
+2026-03-26 19:10:44,447 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69506.60 (imb=1.0145, rank=1.000, spread=0.10)
+2026-03-26 19:10:53,771 [INFO] src.paper_trader: [A_5pct_60s] Status: 309 trades, net=-551.3bps, win=35.9%, open=0
+2026-03-26 19:10:53,802 [INFO] src.paper_trader: [B_10pct_120s] Status: 158 trades, net=-326.0bps, win=38.6%, open=0
+2026-03-26 19:11:14,218 [INFO] src.paper_trader: [B_10pct_120s] Order placed: buy @ 69515.90 (imb=0.8893, rank=0.955, spread=0.10)
+2026-03-26 19:11:49,738 [INFO] src.paper_trader: [A_5pct_60s] Order placed: buy @ 69525.90 (imb=0.9539, rank=0.958, spread=0.10)
+2026-03-26 19:11:53,798 [INFO] src.paper_trader: [A_5pct_60s] Status: 309 trades, net=-551.3bps, win=35.9%, open=0
+2026-03-26 19:11:53,834 [INFO] src.paper_trader: [B_10pct_120s] Status: 158 trades, net=-326.0bps, win=38.6%, open=0
+2026-03-26 19:12:53,886 [INFO] src.paper_trader: [A_5pct_60s] Status: 309 trades, net=-551.3bps, win=35.9%, open=0
+2026-03-26 19:12:53,934 [INFO] src.paper_trader: [B_10pct_120s] Status: 158 trades, net=-326.0bps, win=38.6%, open=0
+2026-03-26 19:13:00,890 [INFO] src.paper_trader: [A_5pct_60s] Order placed: sell @ 69552.60 (imb=-0.9559, rank=0.046, spread=0.10)
+2026-03-26 19:13:23,574 [INFO] src.paper_trader: [B_10pct_120s] Order placed: sell @ 69535.20 (imb=-1.0318, rank=0.000, spread=0.10)
